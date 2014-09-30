@@ -139,12 +139,12 @@ class MappedXmlElement(MappedXmlObject):
             # 0 = None
             if values:
                 log.warn('Values found for element "%s" when multiplicity should be 0: %s',  self.name, values)
-            return ''
+            return None
         elif self.multiplicity == '1':
             # 1 = Mandatory, maximum 1 = Exactly one
             if not values:
                 log.warn('Value not found for element "%s"' % self.name)
-                return ''
+                return None
             return values[0]
         elif self.multiplicity == '*':
             # * = 0..* = zero or more
@@ -154,7 +154,7 @@ class MappedXmlElement(MappedXmlObject):
             if values:
                 return values[0]
             else:
-                return ''
+                return None
         elif self.multiplicity == '1..*':
             # 1..* = one or more
             return values
@@ -177,6 +177,7 @@ class DCATElement(MappedXmlElement):
 		'auto': 'http://datos.gob.es/recurso/sector-publico/territorio/Autonomia/',
 		'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
 		'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+        'void': 'http://rdfs.org/ns/void',
     }
 
 class DCATDistribution(DCATElement):
@@ -185,7 +186,8 @@ class DCATDistribution(DCATElement):
         DCATElement(
             name='title',
             search_paths=[
-                'dct:title/text()'
+                'dct:title/text()',
+                'rdfs:label',
             ],
             multiplicity='0..1',
             multilingual=True,
@@ -193,7 +195,8 @@ class DCATDistribution(DCATElement):
         DCATElement(
             name='description',
             search_paths=[
-                'dct:description/text()'
+                'dct:description/text()',
+                'rdfs:comment',
             ],
             multiplicity='0..1',
             multilingual=True,
@@ -235,6 +238,13 @@ class DCATDistribution(DCATElement):
             multiplicity='0..1',
         ),
         DCATElement(
+            name='sparqlEndpoint',
+            search_paths=[
+                'void:sparqlEndpoint/text()'
+            ],
+            multiplicity='0..1',
+        ),
+        DCATElement(
             name='byteSize',
             search_paths=[
                 'dcat:byteSize/text()'
@@ -268,7 +278,7 @@ class DCATPublisher(DCATElement):
             multiplicity='0..1'
         ),
         DCATElement(
-            name='email',
+            name='mbox',
             search_paths=[
                 'foaf:mbox/text()',
             ],
@@ -324,9 +334,15 @@ _dcat_dataset_elements = [
         multiplicity='*',
     ),
     DCATElement(
-        name='identifier',
+        name='uri',
         search_paths=[
             '@rdf:about',
+        ],
+        multiplicity='0..1',
+    ),
+    DCATElement(
+        name='identifier',
+        search_paths=[
             'dct:identifier/text()'
         ],
         multiplicity='0..1',

@@ -11,6 +11,7 @@
         "name": "Geological Society",
         "mbox": "info@gs.org"
     },
+    "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/",
     "distribution": [{"accessURL": "http://www.bgs.ac.uk/gbase/geochemcd/home.html",
                        "byteSize": null,
                        "description": "Resource locator",

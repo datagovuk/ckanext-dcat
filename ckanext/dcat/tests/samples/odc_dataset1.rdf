@@ -1,0 +1,37 @@
+<!-- Based on:
+     * http://opendatacommunities.org/data/administrative-geography.rdf
+-->
+<rdf:RDF
+    xmlns:j.0="http://publishmydata.com/def/dataset#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:j.1="http://www.w3.org/ns/dcat#"
+    xmlns:j.2="http://purl.org/dc/terms/"
+    xmlns:j.3="http://rdfs.org/ns/void#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:j.4="http://publishmydata.com/def/ontology/folder/">
+  <j.1:Dataset rdf:about="http://opendatacommunities.org/data/administrative-geography">
+    <j.1:theme rdf:resource="http://opendatacommunities.org/def/concept/themes/geography"/>
+    <j.2:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2012-03-29T19:31:58+01:00</j.2:issued>
+    <rdfs:comment>Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics</rdfs:comment>
+    <j.2:subject rdf:resource="http://opendatacommunities.org/def/concept/themes/geography"/>
+    <j.3:dataDump rdf:resource="http://opendatacommunities.org/data/administrative-geography/dump"/>
+    <j.4:inFolder rdf:resource="http://opendatacommunities.org/def/concept/folders/themes/geography"/>
+    <j.3:triples rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
+    >342730</j.3:triples>
+    <rdfs:label>Administrative geography</rdfs:label>
+    <j.0:graph rdf:resource="http://opendatacommunities.org/graph/administrative-geography"/>
+    <j.2:publisher rdf:resource="http://reference.data.gov.uk/id/department/dclg"/>
+    <j.2:references rdf:resource="http://opendatacommunities.org/docs"/>
+    <j.2:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
+    >2013-06-12T15:10:01+01:00</j.2:modified>
+    <j.2:title>Administrative geography</j.2:title>
+    <j.3:sparqlEndpoint rdf:resource="http://opendatacommunities.org/sparql"/>
+    <rdf:type rdf:resource="http://publishmydata.com/def/dataset#Dataset"/>
+    <rdf:type rdf:resource="http://rdfs.org/ns/void#Dataset"/>
+    <j.2:license rdf:resource="http://www.nationalarchives.gov.uk/doc/open-government-licence/"/>
+    <j.0:contactEmail rdf:resource="mailto:ODC@communities.gsi.gov.uk"/>
+    <j.2:description>This is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS 'SNAC' system. </j.2:description>
+  </j.1:Dataset>
+</rdf:RDF>
+

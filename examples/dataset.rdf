@@ -26,11 +26,11 @@
     <dc:language>en</dc:language>
     <dc:language>es</dc:language>
     <dc:language>ca</dc:language>
-    <dct:license rdf:resource="https://data.some.org/link/to/license"/>
+    <dct:license rdf:resource="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/"/>
     <dct:publisher>
         <foaf:Organization>
-            <foaf:name>Publishing Organization for dataset 1</foaf:name>
-            <foaf:mbox>contact@some.org</foaf:mbox>
+            <foaf:name>Geological Society</foaf:name>
+            <foaf:mbox>info@gs.org</foaf:mbox>
         </foaf:Organization>
     </dct:publisher>
     <dcat:distribution>

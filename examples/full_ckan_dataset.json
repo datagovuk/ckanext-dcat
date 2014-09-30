@@ -7,6 +7,14 @@
                 "package_id": "756d6426-d52d-492a-a263-599ad1caa123",
                 "revision_id": "1816777b-f93c-4eb2-8100-7b1a65004730"
             },
+            "key": "license_url",
+            "value": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/"
+        },
+        {
+            "__extras": {
+                "package_id": "756d6426-d52d-492a-a263-599ad1caa123",
+                "revision_id": "1816777b-f93c-4eb2-8100-7b1a65004730"
+            },
             "key": "INSPIRE",
             "value": "True"
         },

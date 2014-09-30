@@ -71,5 +71,10 @@ Install
 =======
 
 
+Tests
+=====
 
+Some tests are provided. They can be run as follows:
+
+    nosetests ckanext/dcat/tests
 

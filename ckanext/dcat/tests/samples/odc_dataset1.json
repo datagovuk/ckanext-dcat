@@ -1,0 +1,18 @@
+{
+  "contactEmail": "ODC@communities.gsi.gov.uk",
+  "description": "Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics\n\nThis is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS 'SNAC' system. ",
+  "distribution": [],
+  "issued": "2012-03-29T19:31:58+01:00",
+  "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/",
+  "modified": "2013-06-12T15:10:01+01:00",
+  "publisher": {"uri": "http://reference.data.gov.uk/id/department/dclg"},
+  "references": [
+    "http://opendatacommunities.org/docs"
+  ],
+  "sparqlEndpoint": "http://opendatacommunities.org/sparql",
+  "subject": [
+    "http://opendatacommunities.org/def/concept/themes/geography"
+  ],
+  "title": "Administrative geography",
+  "uri": "http://opendatacommunities.org/data/administrative-geography"
+}

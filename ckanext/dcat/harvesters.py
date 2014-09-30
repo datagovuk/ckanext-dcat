@@ -18,7 +18,7 @@ from ckan import plugins as p
 from ckan import logic
 from ckan import model
 
-from ckanext.harvest.harvesters import HarvesterBase
+from ckanext.harvest.harvesters import HarvesterBase, IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
 
 from ckanext.dcat import converters, formats
@@ -27,6 +27,7 @@ log = logging.getLogger(__name__)
 
 class DCATHarvester(HarvesterBase):
 
+    p.implements(IHarvester)
 
     MAX_FILE_SIZE = 1024 * 1024 * 50 # 50 Mb
     CHUNK_SIZE = 1024

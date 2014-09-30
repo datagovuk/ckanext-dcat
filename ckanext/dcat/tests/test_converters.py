@@ -1,45 +1,46 @@
-import os
-import json
-import difflib
-
 from ckanext.dcat import converters
+from ckanext.dcat.tests import poor_mans_dict_diff, get_example_file_as_dict
 
 
 class TestConverters(object):
 
-    def _get_file_as_dict(self, file_name):
-        path = os.path.join(os.path.dirname(__file__),
-                            '..', '..', '..', 'examples',
-                            file_name)
-        with open(path, 'r') as f:
-            return json.load(f)
-
-    def _poor_mans_dict_diff(self, d1, d2):
-        def _get_lines(d):
-            return sorted([l.strip().rstrip(',')
-                           for l in json.dumps(d, indent=0).split('\n')
-                           if not l.startswith(('{', '}', '[', ']'))])
-
-        d1_lines = _get_lines(d1)
-        d2_lines = _get_lines(d2)
-
-        return '\n' + '\n'.join([l for l in difflib.ndiff(d1_lines, d2_lines)
-                                 if l.startswith(('-', '+'))])
-
     def test_ckan_to_dcat(self):
-        ckan_dict = self._get_file_as_dict('full_ckan_dataset.json')
-        expected_dcat_dict = self._get_file_as_dict('dataset.json')
+        ckan_dict = get_example_file_as_dict('full_ckan_dataset.json')
+        expected_dcat_dict = get_example_file_as_dict('dataset.json')
 
         dcat_dict = converters.ckan_to_dcat(ckan_dict)
 
-        assert dcat_dict == expected_dcat_dict, self._poor_mans_dict_diff(
+        assert dcat_dict == expected_dcat_dict, poor_mans_dict_diff(
             expected_dcat_dict, dcat_dict)
 
     def test_dcat_to_ckan(self):
-        dcat_dict = self._get_file_as_dict('dataset.json')
-        expected_ckan_dict = self._get_file_as_dict('ckan_dataset.json')
+        dcat_dict = get_example_file_as_dict('dataset.json')
+        expected_ckan_dict = get_example_file_as_dict('ckan_dataset.json')
 
         ckan_dict = converters.dcat_to_ckan(dcat_dict)
 
-        assert ckan_dict == expected_ckan_dict, self._poor_mans_dict_diff(
+        assert ckan_dict == expected_ckan_dict, poor_mans_dict_diff(
             expected_ckan_dict, ckan_dict)
+
+    # This roundtrip doesn't work - the mapping to DCAT doesn't store lots of
+    # CKAN info, particularly:
+    #   ID, extras, maintainer, metadata_created/modified
+    #def test_ckan_to_dcat_to_ckan(self):
+    #    ckan_dict = get_example_file_as_dict('full_ckan_dataset.json')
+    #
+    #    dcat_dict = converters.ckan_to_dcat(ckan_dict)
+    #    new_ckan_dict = converters.dcat_to_ckan(dcat_dict)
+    #
+    #    assert ckan_dict == new_ckan_dict, poor_mans_dict_diff(
+    #        ckan_dict, new_ckan_dict)
+
+    # This roundtrip works, but no doubt you could add DCAT predicates that are
+    # not converted to CKAN properties.
+    def test_dcat_to_ckan_to_dcat(self):
+        dcat_dict = get_example_file_as_dict('dataset.json')
+
+        ckan_dict = converters.dcat_to_ckan(dcat_dict)
+        new_dcat_dict = converters.ckan_to_dcat(ckan_dict)
+
+        assert dcat_dict == new_dcat_dict, poor_mans_dict_diff(
+            dcat_dict, new_dcat_dict)

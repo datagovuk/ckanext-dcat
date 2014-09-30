@@ -11,7 +11,6 @@ def dcat_to_ckan(dcat_dict):
     package_dict['notes'] = dcat_dict.get('description')
     package_dict['url'] = dcat_dict.get('landingPage')
 
-
     package_dict['tags'] = []
     for keyword in dcat_dict.get('keyword', []):
         package_dict['tags'].append({'name': keyword})
@@ -28,6 +27,10 @@ def dcat_to_ckan(dcat_dict):
     elif isinstance(dcat_publisher, dict) and dcat_publisher.get('name'):
         package_dict['extras'].append({'key': 'dcat_publisher_name', 'value': dcat_publisher.get('name')})
         package_dict['extras'].append({'key': 'dcat_publisher_email', 'value': dcat_publisher.get('mbox')})
+
+    dcat_license = dcat_dict.get('license')
+    if dcat_license:
+        package_dict['extras'].append({'key': 'license_url', 'value': dcat_license})
 
     package_dict['extras'].append({
         'key': 'language',
@@ -84,6 +87,9 @@ def ckan_to_dcat(package_dict):
 
         elif extra['key'] == 'guid':
             dcat_dict['identifier'] = extra['value']
+
+        elif extra['key'] == 'license_url':
+            dcat_dict['license'] = extra['value']
 
     if not dcat_dict['publisher'].get('name') and package_dict.get('maintainer'):
         dcat_dict['publisher']['name'] = package_dict.get('maintainer')
