@@ -17,15 +17,40 @@ class ParseError(Exception):
     pass
 
 
-class DCATDataset(object):
-    def __init__(self, dcat_rdf_string):
-        self.dcat_rdf_string = dcat_rdf_string
+class RdfDocument(object):
+    def __init__(self, rdf_string, format='xml'):
+        '''Reads the RDF string.
+
+        May raise SAXParseException.
+        '''
+        self.rdf_string = rdf_string
         self.graph = rdflib.Graph()
-        self.graph.parse(data=dcat_rdf_string)
-        # format: is determined from source. Can be: rdf/xml, turtle, n3, nt, trix, rdfa
+        self.graph.parse(data=rdf_string, format=format)
+        # format: Can be: xml, turtle, n3, nt, trix, rdfa
+
+    def datasets(self):
+        dcat_datasets = list(self.graph.subjects(RDF.type, DCAT.Dataset))
+        publishmydata_datasets = list(self.graph.subjects(RDF.type, DATASET.Dataset))
+        void_datasets = list(self.graph.subjects(RDF.type, VOID.Dataset))
+        return list(set(dcat_datasets + publishmydata_datasets + void_datasets))
+
+
+class DCATDatasets(RdfDocument):
+    def split_into_datasets(self):
+        for dataset in self.datasets():
+            uri = dataset
+            dataset_graph = rdflib.Graph()
+            dataset_graph += self.graph.triples((uri, None, None))
+            triples_str = dataset_graph.serialize(format='turtle')
+            yield str_(uri), triples_str
+
+
+class DCATDataset(RdfDocument):
+    def __init__(self, rdf_string, format='turtle'):
+        RdfDocument.__init__(self, rdf_string, format=format)
 
     def read_values(self):
-        datasets = list(self.graph.subjects(RDF.type, DCAT.Dataset))
+        datasets = self.datasets()
         if not datasets:
             raise ParseError('No dataset found')
         if len(datasets) > 1:
@@ -40,7 +65,7 @@ class DCATDataset(object):
         rdf_dataset = add_rdf_resource_operators(dataset_resource)
 
         d = dcat_dict = {}
-        d['title'] = str_(rdf_dataset.first(RDFS.label) or \
+        d['title'] = str_(rdf_dataset.first(RDFS.label) or
                           rdf_dataset.first(DCT.title))
         d['description'] = '\n\n'.join(rdf_dataset.all(RDFS.comment) +
                                        rdf_dataset.all(DCT.description)) \
@@ -73,6 +98,7 @@ class DCATDataset(object):
         d['language'] = rdf_dataset.all(DC.language) or None
         d['keyword'] = rdf_dataset.all(DCAT.keyword) or None
         d['identifier'] = rdf_dataset.first(DCT.identifier)
+        d['spatial'] = str_(uri_(rdf_dataset.first(DCT.spatial)))
         d['distribution'] = []
         for rdf_distribution in rdf_dataset[DCAT.distribution]:
             dist = {}
@@ -106,7 +132,7 @@ def str_(rdf_literal):
     return str(rdf_literal)
 
 def uri_(resource):
-    if resource:
+    if resource and type(resource.identifier) != rdflib.term.BNode:
         return resource.identifier
 
 def deduplicate(list_):

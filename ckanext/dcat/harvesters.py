@@ -18,7 +18,8 @@ from ckan import plugins as p
 from ckan import logic
 from ckan import model
 
-from ckanext.harvest.harvesters import HarvesterBase, IHarvester
+from ckanext.harvest.harvesters import HarvesterBase
+from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
 
 from ckanext.dcat import converters, formats
@@ -442,6 +443,43 @@ class DCATJSONHarvester(DCATHarvester):
         content = harvest_object.content
 
         dcat_dict = json.loads(content)
+
+        package_dict = converters.dcat_to_ckan(dcat_dict)
+
+        return package_dict, dcat_dict
+
+
+class DCATRDFHarvester(DCATHarvester):
+
+    DCAT_NS = 'http://www.w3.org/ns/dcat#'
+    DCT_NS = 'http://purl.org/dc/terms/'
+    RDF_NS = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+
+    def info(self):
+        return {
+            'name': 'dcat_rdf',
+            'title': 'DCAT RDF Harvester',
+            'description': 'Harvester for DCAT dataset descriptions serialized as RDF - XML, TTL, N3 etc'
+        }
+
+
+    def _get_guids_and_datasets(self, content):
+
+        for uri, dataset_rdf_str in formats.rdf.DCATDatasets(content).split_into_datasets():
+
+            guid = uri
+            if not guid:
+                raise AssertionError('No guid')
+
+            yield guid, dataset_rdf_str
+
+
+    def _get_package_dict(self, harvest_object):
+
+        content = harvest_object.content
+
+        dataset = formats.rdf.DCATDataset(content)
+        dcat_dict = dataset.read_values()
 
         package_dict = converters.dcat_to_ckan(dcat_dict)
 

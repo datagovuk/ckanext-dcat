@@ -10,6 +10,7 @@
     "http://opendatacommunities.org/docs"
   ],
   "sparqlEndpoint": "http://opendatacommunities.org/sparql",
+  "spatial": "http://statistics.data.gov.uk/id/statistical-geography/E92000001",
   "subject": [
     "http://opendatacommunities.org/def/concept/themes/geography"
   ],

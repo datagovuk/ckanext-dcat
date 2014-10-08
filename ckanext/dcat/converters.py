@@ -12,7 +12,7 @@ def dcat_to_ckan(dcat_dict):
     package_dict['url'] = dcat_dict.get('landingPage')
 
     package_dict['tags'] = []
-    for keyword in dcat_dict.get('keyword', []):
+    for keyword in (dcat_dict.get('keyword') or []):
         package_dict['tags'].append({'name': keyword})
 
     package_dict['extras'] = []
@@ -24,9 +24,17 @@ def dcat_to_ckan(dcat_dict):
     dcat_publisher = dcat_dict.get('publisher')
     if isinstance(dcat_publisher, basestring):
         package_dict['extras'].append({'key': 'dcat_publisher_name', 'value': dcat_publisher})
-    elif isinstance(dcat_publisher, dict) and dcat_publisher.get('name'):
-        package_dict['extras'].append({'key': 'dcat_publisher_name', 'value': dcat_publisher.get('name')})
-        package_dict['extras'].append({'key': 'dcat_publisher_email', 'value': dcat_publisher.get('mbox')})
+    elif isinstance(dcat_publisher, dict):
+        if dcat_publisher.get('name'):
+            package_dict['extras'].append({'key': 'dcat_publisher_name', 'value': dcat_publisher.get('name')})
+        if dcat_publisher.get('mbox'):
+            package_dict['extras'].append({'key': 'dcat_publisher_email', 'value': dcat_publisher.get('mbox')})
+        if dcat_publisher.get('uri'):
+            package_dict['extras'].append({'key': 'dcat_publisher_uri', 'value': dcat_publisher.get('uri')})
+
+    #HACK
+    if dcat_publisher.get('uri') == 'http://reference.data.gov.uk/id/department/dclg':
+        package_dict['owner_org'] = 'department-for-communities-and-local-government'
 
     dcat_license = dcat_dict.get('license')
     if dcat_license:
@@ -34,11 +42,11 @@ def dcat_to_ckan(dcat_dict):
 
     package_dict['extras'].append({
         'key': 'language',
-        'value': ','.join(dcat_dict.get('language', []))
+        'value': ','.join(dcat_dict.get('language') or [])
     })
 
     package_dict['resources'] = []
-    for distribution in dcat_dict.get('distribution', []):
+    for distribution in (dcat_dict.get('distribution') or []):
         resource = {
             'name': distribution.get('title'),
             'description': distribution.get('description'),
@@ -66,13 +74,13 @@ def ckan_to_dcat(package_dict):
 
 
     dcat_dict['keyword'] = []
-    for tag in package_dict.get('tags', []):
+    for tag in (package_dict.get('tags') or []):
         dcat_dict['keyword'].append(tag['name'])
 
 
     dcat_dict['publisher'] = {}
 
-    for extra in package_dict.get('extras', []):
+    for extra in (package_dict.get('extras') or []):
         if extra['key'] in ['dcat_issued', 'dcat_modified']:
             dcat_dict[extra['key'].replace('dcat_', '')] = extra['value']
 
@@ -97,7 +105,7 @@ def ckan_to_dcat(package_dict):
             dcat_dict['publisher']['mbox'] = package_dict.get('maintainer_email')
 
     dcat_dict['distribution'] = []
-    for resource in package_dict.get('resources', []):
+    for resource in (package_dict.get('resources') or []):
         distribution = {
             'title': resource.get('name'),
             'description': resource.get('description'),
