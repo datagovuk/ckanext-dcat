@@ -58,7 +58,11 @@ def drop_keys_with_blank_values(data):
 
 def drop_unicodeness(data):
     if isinstance(data, basestring):
-        return str(data)
+        try:
+            return str(data)
+        except:
+            # return unicode if it really is!
+            return data
     elif isinstance(data, collections.Mapping):
         return dict(map(drop_unicodeness, data.iteritems()))
     elif isinstance(data, collections.Iterable):

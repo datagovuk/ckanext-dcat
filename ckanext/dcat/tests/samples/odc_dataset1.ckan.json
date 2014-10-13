@@ -1,2 +1,79 @@
 {
+  "extras": [
+    {
+      "key": "contact_email",
+      "value": "ODC@communities.gsi.gov.uk"
+    },
+    {
+      "key": "data_issued",
+      "value": "2012-03-29T19:31:58+01:00"
+    },
+    {
+      "key": "data_modified",
+      "value": "2013-06-12T15:10:01+01:00"
+    },
+    {
+      "key": "dcat_publisher_uri",
+      "value": "http://reference.data.gov.uk/id/department/dclg"
+    },
+    {
+      "key": "dcat_subject",
+      "value": "http://opendatacommunities.org/def/concept/themes/geography"
+    },
+    {
+      "key": "guid",
+      "value": null
+    },
+    {
+      "key": "language",
+      "value": ""
+    },
+    {
+      "key": "license_url",
+      "value": "http://www.nationalarchives.gov.uk/doc/open-government-licence/"
+    },
+    {
+      "key": "metadata_uri",
+      "value": "http://opendatacommunities.org/data/administrative-geography"
+    }
+  ],
+  "license_id": "uk-ogl",
+  "notes": "Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics\n\nThis is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS \u2019SNAC\u2019 system. ",
+  "resources": [
+    {
+      "description": null,
+      "format": "HTML",
+      "name": "Reference",
+      "resource_type": "documentation",
+      "url": "http://opendatacommunities.org/docs"
+    },
+    {
+      "description": null,
+      "format": "RDF",
+      "name": "Data dump",
+      "resource_type": "file",
+      "url": "http://opendatacommunities.org/data/administrative-geography/dump"
+    },
+    {
+      "description": null,
+      "format": "SPARQL",
+      "name": "SPARQL Endpoint",
+      "resource_type": "api",
+      "url": "http://opendatacommunities.org/sparql"
+    },
+    {
+      "description": null,
+      "format": "SHP",
+      "name": "Data as shapefile (zipped)",
+      "resource_type": "file",
+      "url": "https://opendatacommunities-geo.s3-eu-west-1.amazonaws.com/45685750-609b-44d2-9878-178808fc0095.zip"
+    }
+  ],
+  "tags": [
+    {
+      "name": "http://www.nationalarchives.gov.uk/doc/open-government-licence/"
+    }
+  ],
+  "title": "Administrative geography",
+  "url": null
 }

@@ -18,7 +18,7 @@ from ckan import plugins as p
 from ckan import logic
 from ckan import model
 
-from ckanext.harvest.harvesters import HarvesterBase
+from ckanext.harvest.harvesters.base import HarvesterBase, PackageDictError
 from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
 
@@ -218,11 +218,11 @@ class DCATHarvester(HarvesterBase):
                     batch_guids.append(guid)
 
                     if guid in guids_in_db:
-                        # Dataset needs to be udpated
+                        # Dataset needs to be updated
                         obj = HarvestObject(guid=guid, job=harvest_job,
                                         package_id=guid_to_package_id[guid],
                                         content=as_string,
-                                        extras=[HarvestObjectExtra(key='status', value='change')])
+                                        extras=[HarvestObjectExtra(key='status', value='changed')])
                     else:
                         # Dataset needs to be created
                         obj = HarvestObject(guid=guid, job=harvest_job,
@@ -451,6 +451,9 @@ class DCATJSONHarvester(DCATHarvester):
 
 class DCATRDFHarvester(DCATHarvester):
 
+    # Monkey patch in the base import_stage
+    import_stage = HarvesterBase.import_stage
+
     DCAT_NS = 'http://www.w3.org/ns/dcat#'
     DCT_NS = 'http://purl.org/dc/terms/'
     RDF_NS = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
@@ -459,9 +462,8 @@ class DCATRDFHarvester(DCATHarvester):
         return {
             'name': 'dcat_rdf',
             'title': 'DCAT RDF Harvester',
-            'description': 'Harvester for DCAT dataset descriptions serialized as RDF - XML, TTL, N3 etc'
+            'description': 'Harvester for DCAT dataset descriptions serialized as RDF/XML'
         }
-
 
     def _get_guids_and_datasets(self, content):
 
@@ -473,14 +475,85 @@ class DCATRDFHarvester(DCATHarvester):
 
             yield guid, dataset_rdf_str
 
-
+    # DCATHarvester version
     def _get_package_dict(self, harvest_object):
 
         content = harvest_object.content
 
         dataset = formats.rdf.DCATDataset(content)
-        dcat_dict = dataset.read_values()
+        try:
+            dcat_dict = dataset.read_values()
+        except formats.rdf.ReadValueError, e:
+            raise PackageDictError(str(e))
 
         package_dict = converters.dcat_to_ckan(dcat_dict)
 
         return package_dict, dcat_dict
+
+    # HarvesterBase version
+    def get_package_dict(self, harvest_object, package_dict_defaults,
+                         source_config, existing_dataset):
+
+        content = harvest_object.content
+
+        dataset = formats.rdf.DCATDataset(content)
+        try:
+            dcat_dict = dataset.read_values()
+        except formats.rdf.ReadValueError, e:
+            raise PackageDictError(str(e))
+
+        package_dict_harvested = converters.dcat_to_ckan(dcat_dict)
+
+        # convert extras to a dict for the defaults merge
+        package_dict_harvested['extras'] = \
+            dict((extra['key'], extra['value'])
+                 for extra in package_dict_harvested['extras'])
+        # convert tags to a list for the defaults merge
+        package_dict_harvested['tags'] = \
+            [tag_dict['name'] for tag_dict in package_dict_harvested['tags']]
+
+        package_dict = package_dict_defaults.merge(package_dict_harvested)
+
+        if not existing_dataset:
+            package_dict['name'] = self.munge_title_to_name(package_dict['title'])
+            package_dict['name'] = self.check_name(package_dict['name'])
+
+        # Harvest GUID needs setting manually as DCAT has a clashing 'GUID'
+        # extra that comes from the dct:identifier
+        package_dict['extras']['guid'] = package_dict_defaults['extras']['guid']
+
+        # set publisher according the harvest source publisher
+        # and any value for dcat_publisher gets stored in an extra
+
+        # DGU Theme
+        try:
+            from ckanext.dgu.lib.theme import categorize_package, PRIMARY_THEME, SECONDARY_THEMES
+            if existing_dataset:
+                # Bring forward extras which may be manually edited
+                for extra_key in (PRIMARY_THEME, SECONDARY_THEMES):
+                    package_dict['extras'][extra_key] = \
+                        existing_dataset.extras.get(extra_key)
+            if not package_dict['extras'].get(PRIMARY_THEME):
+                # Guess theme from other metadata
+                themes = categorize_package(package_dict)
+                if themes:
+                    package_dict['extras'][PRIMARY_THEME] = themes[0]
+                    package_dict['extras'][SECONDARY_THEMES] = themes[1:]
+        except ImportError:
+            pass
+        log.debug('Theme: %s', package_dict['extras'].get('theme-primary'))
+
+        # DGU-specific license field
+        if not package_dict.get('license_id') and package_dict['extras'].get('license_url'):
+            # abuses the license_id field, but that's what DGU does
+            package_dict['license_id'] = package_dict['extras']['license_url']
+
+        # DGU contact details
+        if package_dict['extras'].get('contact_email'):
+            package_dict['extras']['contact-email'] = package_dict['extras']['contact_email']
+
+        # convert for package_update
+        package_dict['extras'] = self.extras_from_dict(package_dict['extras'])
+        package_dict['tags'] = [{'name': tag} for tag in package_dict['tags']]
+
+        return package_dict

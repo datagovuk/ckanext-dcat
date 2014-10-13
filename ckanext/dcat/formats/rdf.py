@@ -11,9 +11,12 @@ DC = rdflib.Namespace('http://purl.org/dc/elements/1.1/')
 DATASET = rdflib.Namespace('http://publishmydata.com/def/dataset#')
 FOAF = rdflib.Namespace('http://xmlns.com/foaf/0.1/')
 VOID = rdflib.Namespace('http://rdfs.org/ns/void#')
-
+GEOG = rdflib.Namespace('http://opendatacommunities.org/def/ontology/geography/')
 
 class ParseError(Exception):
+    pass
+
+class ReadValueError(Exception):
     pass
 
 
@@ -82,10 +85,11 @@ class DCATDataset(RdfDocument):
         #               if license_resource else None
         publisher = {}
         rdf_publisher = rdf_dataset.first(DCT.publisher)
-        add_rdf_resource_operators(rdf_publisher)
-        publisher['uri'] = str_(uri_(rdf_publisher))
-        publisher['mbox'] = str_(rdf_publisher.first(FOAF.mbox))
-        publisher['name'] = str_(rdf_publisher.first(FOAF.name))
+        if rdf_publisher:
+            add_rdf_resource_operators(rdf_publisher)
+            publisher['uri'] = str_(uri_(rdf_publisher))
+            publisher['mbox'] = str_(rdf_publisher.first(FOAF.mbox))
+            publisher['name'] = str_(rdf_publisher.first(FOAF.name))
         d['publisher'] = publisher or None
         d['references'] = [str_(uri_(ref))
                            for ref in rdf_dataset.all(DCT.references)] or None
@@ -96,7 +100,8 @@ class DCATDataset(RdfDocument):
             for subject in (rdf_dataset.all(DCT.subject) +
                             rdf_dataset.all(DCAT.theme))]) or None
         d['language'] = rdf_dataset.all(DC.language) or None
-        d['keyword'] = rdf_dataset.all(DCAT.keyword) or None
+        d['keyword'] = [str_(keyword)
+                        for keyword in rdf_dataset.all(DCAT.keyword)] or None
         d['identifier'] = rdf_dataset.first(DCT.identifier)
         d['spatial'] = str_(uri_(rdf_dataset.first(DCT.spatial)))
         d['distribution'] = []
@@ -109,6 +114,9 @@ class DCATDataset(RdfDocument):
             dist['format'] = rdf_distribution.first(DCAT.mediaType)
             if dist:
                 d['distribution'].append(dist)
+        d['dataDump'] = str_(uri_(rdf_dataset.first(VOID.dataDump)))
+        d['zippedShapefile'] = str_(uri_(rdf_dataset.first(GEOG.zippedShapefile)))
+
         return dcat_dict
 
 def add_rdf_resource_operators(rdf_resource):
@@ -129,7 +137,7 @@ def add_rdf_resource_operators(rdf_resource):
 def str_(rdf_literal):
     if rdf_literal is None:
         return None
-    return str(rdf_literal)
+    return unicode(rdf_literal)
 
 def uri_(resource):
     if resource and type(resource.identifier) != rdflib.term.BNode:

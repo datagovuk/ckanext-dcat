@@ -19,7 +19,7 @@ class TestRdfToDict:
         dcat = get_example_file_content('dataset.rdf')
         expected_dict = get_example_file_as_dict('dataset.json')
 
-        dcat_dict = rdf.DCATDataset(dcat).read_values()
+        dcat_dict = rdf.DCATDataset(dcat, format='xml').read_values()
 
         # the URI is optional for the json serialization - this is ok
         expected_dict['uri'] = 'https://data.some.org/catalog/datasets/9df8df51-63db-37a8-e044-0003ba9b0d98'
@@ -33,7 +33,7 @@ class TestRdfToDict:
         dcat = get_sample_file_content('odc_dataset1.rdf')
         expected_dict = get_sample_file_as_dict('odc_dataset1.json')
 
-        dcat_dict = rdf.DCATDataset(dcat).read_values()
+        dcat_dict = rdf.DCATDataset(dcat, format='xml').read_values()
 
         assert_equal2(expected_dict, dcat_dict, ignore_keys_with_blank_values=True)
 
@@ -50,7 +50,7 @@ def update_extra(ckan_dict, key, existing_value, new_value):
                 assert_equal(existing_value, extra['value'])
             extra['value'] = new_value
             return
-    raise 'Could not find key %s' % key
+    raise Exception('Could not find key %s' % key)
 
 
 class TestRdfToCkan:
@@ -59,11 +59,11 @@ class TestRdfToCkan:
         dcat = get_example_file_content('dataset.rdf')
         expected_ckan_dict = get_example_file_as_dict('ckan_dataset.json')
 
-        dcat_dict = rdf.DCATDataset(dcat).read_values()
+        dcat_dict = rdf.DCATDataset(dcat, format='xml').read_values()
         ckan_dict = converters.dcat_to_ckan(dcat_dict)
 
         # seconds get added on unnecessarily
-        update_extra(expected_ckan_dict, 'dcat_modified',
+        update_extra(expected_ckan_dict, 'data_modified',
                      '2012-05-10T21:04', '2012-05-10T21:04:00')
         # languages end up in another order
         langs = get_extra(ckan_dict, 'language')
@@ -78,7 +78,7 @@ class TestRdfToCkan:
         dcat = get_sample_file_content('odc_dataset1.rdf')
         expected_ckan_dict = get_sample_file_as_dict('odc_dataset1.ckan.json')
 
-        dcat_dict = rdf.DCATDataset(dcat).read_values()
+        dcat_dict = rdf.DCATDataset(dcat, format='xml').read_values()
         ckan_dict = converters.dcat_to_ckan(dcat_dict)
 
         # the URI is optional for the json serialization - this is ok
