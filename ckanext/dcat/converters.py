@@ -63,6 +63,12 @@ def dcat_to_ckan(dcat_dict):
         if matched_ckan_license_id:
             package_dict['license_id'] = matched_ckan_license_id
 
+    #if dcat_dict.get('isReplacedBy'):
+    #    # This means the dataset is obsolete and needs deleting in CKAN.
+    #    # This is a suggestion, but not used yet, so is commented out.
+    #    import pdb; pdb.set_trace()
+    #    package_dict['state'] = 'deleted'
+
     package_dict['extras'].append({
         'key': 'language',
         'value': ','.join(dcat_dict.get('language') or [])

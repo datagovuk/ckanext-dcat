@@ -518,6 +518,11 @@ class DCATRDFHarvester(DCATHarvester):
             package_dict['name'] = self.munge_title_to_name(package_dict['title'])
             package_dict['name'] = self.check_name(package_dict['name'])
 
+        # ODC specific - discard datasets that are not ready
+        if package_dict['extras'].get('dcat_subject') == u'http://opendatacommunities.org/def/concept/themes/developer-corner':
+            log.info('Discarding dataset with theme "developer-corner": %s', harvest_object.guid)
+            return None
+
         # Harvest GUID needs setting manually as DCAT has a clashing 'GUID'
         # extra that comes from the dct:identifier
         package_dict['extras']['guid'] = package_dict_defaults['extras']['guid']

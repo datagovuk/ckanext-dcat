@@ -116,6 +116,7 @@ class DCATDataset(RdfDocument):
                 d['distribution'].append(dist)
         d['dataDump'] = str_(uri_(rdf_dataset.first(VOID.dataDump)))
         d['zippedShapefile'] = str_(uri_(rdf_dataset.first(GEOG.zippedShapefile)))
+        #d['isReplacedBy'] = str_(uri_(rdf_dataset.first(DCT.isReplacedBy)))
 
         return dcat_dict
 
