@@ -43,7 +43,7 @@ def dcat_to_ckan(dcat_dict):
         if dcat_publisher.get('mbox'):
             package_dict['extras'].append({'key': 'dcat_publisher_email', 'value': dcat_publisher.get('mbox')})
 
-    contact_email = dcat_dict['contactEmail']
+    contact_email = dcat_dict.get('contactEmail')
     if contact_email:
         package_dict['extras'].append({'key': 'contact_email', 'value': contact_email})
 
@@ -57,11 +57,25 @@ def dcat_to_ckan(dcat_dict):
     # licence_id if there is one. So alway store it in an extra, and if there
     # is a match, write the license_id.
     dcat_license = dcat_dict.get('license')
+    if dcat_license == 'No license provided':
+        # Socrata convention
+        dcat_license = None
     if dcat_license:
-        package_dict['extras'].append({'key': 'license_url', 'value': dcat_license})
-        matched_ckan_license_id = find_license_by_uri(dcat_license)
-        if matched_ckan_license_id:
-            package_dict['license_id'] = matched_ckan_license_id
+        # Should it be a URL or textual title of the license?
+        # NB DCAT gives you a URL, the data.json spec is not clear, and the
+        # data.json examples appear to be textual. e.g. "Public Domain":
+        # * http://eeoc.gov/data.json (?)
+        # * https://nycopendata.socrata.com/data.json (Socrata)
+        if dcat_license.startswith('http'):
+            package_dict['extras'].append({'key': 'license_url', 'value': dcat_license})
+            matched_ckan_license_id = find_license_by_uri(dcat_license)
+            if matched_ckan_license_id:
+                package_dict['license_id'] = matched_ckan_license_id
+        else:
+            package_dict['extras'].append({'key': 'license_name', 'value': dcat_license})
+            matched_ckan_license_id = find_license_by_title(dcat_license)
+            if matched_ckan_license_id:
+                package_dict['license_id'] = matched_ckan_license_id
 
     #if dcat_dict.get('isReplacedBy'):
     #    # This means the dataset is obsolete and needs deleting in CKAN.
@@ -189,3 +203,9 @@ def find_license_by_uri(license_uri):
     if license_uri == 'http://www.nationalarchives.gov.uk/doc/open-government-licence/':
         return 'uk-ogl'
 
+def find_license_by_title(license_title):
+    from ckan import model
+    license_title_lower = license_title.lower()
+    for license in model.Package.get_license_register().values():
+        if license.title.lower() == license_title_lower:
+            return license.id

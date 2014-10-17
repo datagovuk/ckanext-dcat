@@ -1,0 +1,29 @@
+{
+    "license": "No license provided",
+    "modified": "2014-04-23",
+    "landingPage": "https://sandbox.demo.socrata.com/d/qcq7-r62w",
+    "title": "Datasync Unit Test - Has Location Column Test",
+    "accessLevel": "public",
+    "distribution": [
+        {
+            "accessURL": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.csv?accessType=DOWNLOAD",
+            "format": "application/csv"
+        },
+        {
+            "accessURL": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.rdf?accessType=DOWNLOAD",
+            "format": "application/rdf+xml"
+        },
+        {
+            "accessURL": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.json?accessType=DOWNLOAD",
+            "format": "application/json"
+        },
+        {
+            "accessURL": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.xml?accessType=DOWNLOAD",
+            "format": "application/xml"
+        }
+    ],
+    "description": "Datasync Unit Test - Has Location Column Test",
+    "identifier": "qcq7-r62w",
+    "publisher": "sandbox.demo.socrata.com",
+    "contactPoint": ""
+}

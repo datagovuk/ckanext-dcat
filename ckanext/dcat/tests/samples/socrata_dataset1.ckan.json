@@ -1,0 +1,58 @@
+{
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": null
+    },
+    {
+      "key": "data_modified",
+      "value": "2014-04-23"
+    },
+    {
+      "key": "guid",
+      "value": "qcq7-r62w"
+    },
+    {
+      "key": "metadata_uri",
+      "value": null
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "sandbox.demo.socrata.com"
+    },
+    {
+      "key": "language",
+      "value": ""
+    }
+  ],
+  "notes": "Datasync Unit Test - Has Location Column Test",
+  "resources": [
+    {
+      "description": null,
+      "format": "application/csv",
+      "name": null,
+      "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.csv?accessType=DOWNLOAD"
+    },
+    {
+      "description": null,
+      "format": "application/rdf+xml",
+      "name": null,
+      "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.rdf?accessType=DOWNLOAD"
+    },
+    {
+      "description": null,
+      "format": "application/json",
+      "name": null,
+      "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.json?accessType=DOWNLOAD"
+    },
+    {
+      "description": null,
+      "format": "application/xml",
+      "name": null,
+      "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.xml?accessType=DOWNLOAD"
+    }
+  ],
+  "tags": [],
+  "title": "Datasync Unit Test - Has Location Column Test",
+  "url": "https://sandbox.demo.socrata.com/d/qcq7-r62w"
+}
