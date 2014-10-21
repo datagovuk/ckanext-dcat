@@ -1,5 +1,6 @@
 from ckanext.dcat import converters
-from ckanext.dcat.tests import poor_mans_dict_diff, get_example_file_as_dict
+from ckanext.dcat.tests import (poor_mans_dict_diff, get_example_file_as_dict,
+                                change_extra_value)
 
 
 class TestConverters(object):
@@ -18,6 +19,9 @@ class TestConverters(object):
         expected_ckan_dict = get_example_file_as_dict('ckan_dataset.json')
 
         ckan_dict = converters.dcat_to_ckan(dcat_dict)
+
+        # dataset.json doesn't store a URI, so ckan_dataset.json will not have one
+        change_extra_value(expected_ckan_dict, 'metadata_uri', None)
 
         assert ckan_dict == expected_ckan_dict, poor_mans_dict_diff(
             expected_ckan_dict, ckan_dict)

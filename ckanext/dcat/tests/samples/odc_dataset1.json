@@ -8,9 +8,6 @@
   "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/",
   "modified": "2013-06-12T15:10:01+01:00",
   "publisher": {"uri": "http://reference.data.gov.uk/id/department/dclg"},
-  "references": [
-    "http://opendatacommunities.org/docs"
-  ],
   "sparqlEndpoint": "http://opendatacommunities.org/sparql",
   "spatial": "http://statistics.data.gov.uk/id/statistical-geography/E92000001",
   "subject": [

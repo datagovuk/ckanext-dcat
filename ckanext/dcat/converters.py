@@ -9,7 +9,7 @@ def dcat_to_ckan(dcat_dict):
 
     package_dict['title'] = dcat_dict.get('title')
     package_dict['notes'] = dcat_dict.get('description')
-    package_dict['url'] = dcat_dict.get('landingPage')
+    package_dict['url'] = dcat_dict.get('landingPage') or dcat_dict.get('uri')
 
     package_dict['tags'] = []
     for keyword in (dcat_dict.get('keyword') or []):
@@ -127,14 +127,15 @@ def dcat_to_ckan(dcat_dict):
             'format': 'SHP',
             'resource_type': 'file',
         })
-    for reference in (dcat_dict.get('references') or []):
-        package_dict['resources'].append({
-            'name': 'Reference',
-            'description': None,
-            'url': reference,
-            'format': 'HTML',
-            'resource_type': 'documentation',
-        })
+    # ODC don't want this. Is there a better way to add docs?
+    #for reference in (dcat_dict.get('references') or []):
+    #    package_dict['resources'].append({
+    #        'name': 'Reference',
+    #        'description': None,
+    #        'url': reference,
+    #        'format': 'HTML',
+    #        'resource_type': 'documentation',
+    #    })
 
     return package_dict
 
@@ -156,8 +157,8 @@ def ckan_to_dcat(package_dict):
     dcat_dict['publisher'] = {}
 
     for extra in (package_dict.get('extras') or []):
-        if extra['key'] in ['dcat_issued', 'dcat_modified']:
-            dcat_dict[extra['key'].replace('dcat_', '')] = extra['value']
+        if extra['key'] in ['data_issued', 'data_modified']:
+            dcat_dict[extra['key'].replace('data_', '')] = extra['value']
 
         elif extra['key'] == 'language':
             dcat_dict['language'] = extra['value'].split(',')

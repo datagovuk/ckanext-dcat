@@ -100,3 +100,11 @@ def assert_equal2(a, b, ignore_keys_with_blank_values=False, ignore_order=False)
         print 'B'
         print_json(b)
         nose.tools.assert_equal(drop_unicodeness(a), drop_unicodeness(b))
+
+
+def change_extra_value(package_dict, key, value):
+    for extra in package_dict['extras']:
+        if extra['key'] == key:
+            extra['value'] = value
+            return
+    assert 0, 'Could not find key "%s"' % key

@@ -557,6 +557,16 @@ class DCATRDFHarvester(DCATHarvester):
         if package_dict['extras'].get('contact_email'):
             package_dict['extras']['contact-email'] = package_dict['extras']['contact_email']
 
+        # DGU package.url as a resource
+        if package_dict['url']:
+            package_dict['resources'].append(
+                {'name': 'Web home',
+                 'description': None,
+                 'url': package_dict['url'],
+                 'format': 'HTML',
+                 'resource_type': 'documentation'
+                })
+
         # convert for package_update
         package_dict['extras'] = self.extras_from_dict(package_dict['extras'])
         package_dict['tags'] = [{'name': tag} for tag in package_dict['tags']]

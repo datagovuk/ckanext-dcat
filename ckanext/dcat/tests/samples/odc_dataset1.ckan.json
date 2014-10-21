@@ -42,13 +42,6 @@
   "resources": [
     {
       "description": null,
-      "format": "HTML",
-      "name": "Reference",
-      "resource_type": "documentation",
-      "url": "http://opendatacommunities.org/docs"
-    },
-    {
-      "description": null,
       "format": "RDF",
       "name": "Data dump",
       "resource_type": "file",
@@ -75,5 +68,5 @@
     }
   ],
   "title": "Administrative geography",
-  "url": null
+  "url": "http://opendatacommunities.org/data/administrative-geography"
 }

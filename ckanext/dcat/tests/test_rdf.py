@@ -65,6 +65,8 @@ class TestRdfToCkan:
         # seconds get added on unnecessarily
         update_extra(expected_ckan_dict, 'data_modified',
                      '2012-05-10T21:04', '2012-05-10T21:04:00')
+        # URL is carried through from the DCAT
+        expected_ckan_dict['url'] = 'https://data.some.org/catalog/datasets/9df8df51-63db-37a8-e044-0003ba9b0d98'
         # languages end up in another order
         langs = get_extra(ckan_dict, 'language')
         if 'en' in langs:
@@ -92,8 +94,14 @@ class TestRdfDatasets:
         dcat = get_sample_file_content('datasets.rdf')
         datasets = list(rdf.DCATDatasets(dcat).split_into_datasets())
         assert_equal(len(datasets), 2)
-        # can come in any order
-        uri, triples = datasets[0] if str(datasets[0]).startswith('http://opendatacommunities.org/data/test2') else datasets[1]
+        # datasets can come in any order
+        print [str(d)[:50] for d in datasets]
+        if 'http://opendatacommunities.org/data/test1' in str(datasets[0])[:50]:
+            uri, triples = datasets[0]
+        elif 'http://opendatacommunities.org/data/test2' in str(datasets[0])[:50]:
+            uri, triples = datasets[1]
+        else:
+            assert 0, str(datasets[0])[:50]
         assert_equal(uri, 'http://opendatacommunities.org/data/test1')
         print triples
         assert_equal(triples.strip(), '''@prefix ns1: <http://purl.org/dc/terms/> .

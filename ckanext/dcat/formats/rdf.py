@@ -91,8 +91,8 @@ class DCATDataset(RdfDocument):
             publisher['mbox'] = str_(rdf_publisher.first(FOAF.mbox))
             publisher['name'] = str_(rdf_publisher.first(FOAF.name))
         d['publisher'] = publisher or None
-        d['references'] = [str_(uri_(ref))
-                           for ref in rdf_dataset.all(DCT.references)] or None
+        #d['references'] = [str_(uri_(ref))
+        #                   for ref in rdf_dataset.all(DCT.references)] or None
         d['sparqlEndpoint'] = str_(uri_(rdf_dataset.first(VOID.sparqlEndpoint)))
         d['spatial'] = rdf_dataset.first(DCT.spatial)
         d['subject'] = deduplicate([
