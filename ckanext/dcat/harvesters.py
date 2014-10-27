@@ -560,7 +560,7 @@ class DCATRDFHarvester(DCATHarvester):
         # DGU package.url as a resource
         if package_dict['url']:
             package_dict['resources'].append(
-                {'name': 'Web home',
+                {'name': 'Dataset home page',
                  'description': None,
                  'url': package_dict['url'],
                  'format': 'HTML',
