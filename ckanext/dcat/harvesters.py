@@ -23,6 +23,7 @@ from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
 
 from ckanext.dcat import converters, formats
+from ckanext.dcat.formats import ParseError
 
 log = logging.getLogger(__name__)
 
@@ -239,6 +240,10 @@ class DCATHarvester(HarvesterBase):
                     # Empty document, no more ids
                     break
 
+            except ParseError, e:
+                msg = 'Error parsing: {0}'.format(str(e))
+                self._save_gather_error(msg, harvest_job)
+                return None
             except ValueError, e:
                 msg = 'Error parsing file: {0}'.format(str(e))
                 self._save_gather_error(msg, harvest_job)
@@ -396,7 +401,7 @@ class DCATXMLHarvester(DCATHarvester):
 
         content = harvest_object.content
 
-        dataset = formats.xml.DCATDataset(content)
+        dataset = formats.xml_.DCATDataset(content)
         dcat_dict = dataset.read_values()
 
         package_dict = converters.dcat_to_ckan(dcat_dict)
@@ -407,22 +412,33 @@ class DCATXMLHarvester(DCATHarvester):
 
 class DCATJSONHarvester(DCATHarvester):
 
+    # Monkey patch in the base import_stage
+    import_stage = HarvesterBase.import_stage
+
     def info(self):
         return {
-            'name': 'dcat_json',
-            'title': 'DCAT JSON Harvester',
-            'description': 'Harvester for DCAT dataset descriptions serialized as JSON'
+            'name': 'data_json',
+            'title': 'data.json',
+            'description': 'data.json (UK-variant) - simple JSON serialization of DCAT dataset'
         }
 
     def _get_guids_and_datasets(self, content):
 
-        doc = json.loads(content)
+        try:
+            doc = json.loads(content)
+        except ValueError, e:
+            raise ParseError('Error parsing JSON: %s' % e)
 
         if isinstance(doc, list):
             # Assume a list of datasets
             datasets = doc
         elif isinstance(doc, dict):
-            datasets = doc.get('dataset', [])
+            if 'dataset' in doc:
+                datasets = doc.get['dataset']
+            elif 'title' in doc:
+                datasets = [doc]
+            else:
+                raise ValueError('Wrong JSON object')
         else:
             raise ValueError('Wrong JSON object')
 
@@ -438,6 +454,7 @@ class DCATJSONHarvester(DCATHarvester):
 
             yield guid, as_string
 
+    # DCATHarvester version
     def _get_package_dict(self, harvest_object):
 
         content = harvest_object.content
@@ -447,6 +464,70 @@ class DCATJSONHarvester(DCATHarvester):
         package_dict = converters.dcat_to_ckan(dcat_dict)
 
         return package_dict, dcat_dict
+
+    # HarvesterBase version
+    def get_package_dict(self, harvest_object, package_dict_defaults,
+                         source_config, existing_dataset):
+
+        content = harvest_object.content
+
+        dcat_dict = json.loads(content)
+
+        package_dict_harvested = converters.dcat_to_ckan(dcat_dict)
+
+        # convert extras to a dict for the defaults merge
+        package_dict_harvested['extras'] = \
+            dict((extra['key'], extra['value'])
+                 for extra in package_dict_harvested['extras'])
+        # convert tags to a list for the defaults merge
+        package_dict_harvested['tags'] = \
+            [tag_dict['name'] for tag_dict in package_dict_harvested['tags']]
+
+        package_dict = package_dict_defaults.merge(package_dict_harvested)
+
+        if not existing_dataset:
+            package_dict['name'] = self.munge_title_to_name(package_dict['title'])
+            package_dict['name'] = self.check_name(package_dict['name'])
+
+        # Harvest GUID needs setting manually as DCAT has a clashing 'GUID'
+        # extra that comes from the dct:identifier
+        package_dict['extras']['guid'] = package_dict_defaults['extras']['guid']
+
+        # set publisher according the harvest source publisher
+        # and any value for dcat_publisher gets stored in an extra
+
+        # DGU Theme
+        try:
+            from ckanext.dgu.lib.theme import categorize_package, PRIMARY_THEME, SECONDARY_THEMES
+            if existing_dataset:
+                # Bring forward extras which may be manually edited
+                for extra_key in (PRIMARY_THEME, SECONDARY_THEMES):
+                    package_dict['extras'][extra_key] = \
+                        existing_dataset.extras.get(extra_key)
+            if not package_dict['extras'].get(PRIMARY_THEME):
+                # Guess theme from other metadata
+                themes = categorize_package(package_dict)
+                if themes:
+                    package_dict['extras'][PRIMARY_THEME] = themes[0]
+                    package_dict['extras'][SECONDARY_THEMES] = themes[1:]
+        except ImportError:
+            pass
+        log.debug('Theme: %s', package_dict['extras'].get('theme-primary'))
+
+        # DGU-specific license field
+        if not package_dict.get('license_id') and package_dict['extras'].get('license_url'):
+            # abuses the license_id field, but that's what DGU does
+            package_dict['license_id'] = package_dict['extras']['license_url']
+
+        # DGU contact details
+        if package_dict['extras'].get('contact_email'):
+            package_dict['extras']['contact-email'] = package_dict['extras']['contact_email']
+
+        # convert for package_update
+        package_dict['extras'] = self.extras_from_dict(package_dict['extras'])
+        package_dict['tags'] = [{'name': tag} for tag in package_dict['tags']]
+
+        return package_dict
 
 
 class DCATRDFHarvester(DCATHarvester):
@@ -461,13 +542,14 @@ class DCATRDFHarvester(DCATHarvester):
     def info(self):
         return {
             'name': 'dcat_rdf',
-            'title': 'DCAT RDF Harvester',
-            'description': 'Harvester for DCAT dataset descriptions serialized as RDF/XML'
+            'title': 'DCAT RDF/XML Harvester',
+            'description': 'DCAT dataset descriptions serialized as RDF/XML'
         }
 
     def _get_guids_and_datasets(self, content):
 
-        for uri, dataset_rdf_str in formats.rdf.DCATDatasets(content).split_into_datasets():
+        rdf_doc = formats.rdf.DCATDatasets(content)
+        for uri, dataset_rdf_str in rdf_doc.split_into_datasets():
 
             guid = uri
             if not guid:

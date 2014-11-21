@@ -1,5 +1,8 @@
 import rdflib
 from rdflib.namespace import RDF, RDFS
+import xml.sax
+
+from ckanext.dcat.formats import ParseError
 
 DCAT = rdflib.Namespace('http://www.w3.org/ns/dcat#')
 REG = rdflib.Namespace('http://purl.org/linked-data/registry#')
@@ -13,23 +16,22 @@ FOAF = rdflib.Namespace('http://xmlns.com/foaf/0.1/')
 VOID = rdflib.Namespace('http://rdfs.org/ns/void#')
 GEOG = rdflib.Namespace('http://opendatacommunities.org/def/ontology/geography/')
 
-class ParseError(Exception):
-    pass
-
-class ReadValueError(Exception):
-    pass
-
 
 class RdfDocument(object):
     def __init__(self, rdf_string, format='xml'):
         '''Reads the RDF string.
 
-        May raise SAXParseException.
+        May raise ParseError.
         '''
         self.rdf_string = rdf_string
         self.graph = rdflib.Graph()
-        self.graph.parse(data=rdf_string, format=format)
-        # format: Can be: xml, turtle, n3, nt, trix, rdfa
+        try:
+            self.graph.parse(data=rdf_string, format=format)
+            # format: Can be: xml, turtle, n3, nt, trix, rdfa
+        except xml.sax.SAXParseException, e:
+            raise ParseError('Error parsing XML: %s' % e)
+        except Exception, e:
+            raise ParseError('Error parsing: %s' % e)
 
     def datasets(self):
         dcat_datasets = list(self.graph.subjects(RDF.type, DCAT.Dataset))
