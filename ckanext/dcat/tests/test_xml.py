@@ -1,4 +1,4 @@
-from ckanext.dcat.formats import xml
+from ckanext.dcat.formats import xml_
 from ckanext.dcat.tests import (assert_equal2,
                                 get_example_file_as_dict,
                                 get_example_file_content,
@@ -17,7 +17,7 @@ class TestXmlToDict:
         dcat = get_example_file_content('dataset.rdf')
         expected_dict = get_example_file_as_dict('dataset.json')
 
-        dcat_dict = xml.DCATDataset(dcat).read_values()
+        dcat_dict = xml_.DCATDataset(dcat).read_values()
 
         # this title has no text in the XML, but is empty string in the JSON - this is ok
         del expected_dict['distribution'][0]['title']
@@ -30,7 +30,7 @@ class TestXmlToDict:
         dcat = get_sample_file_content('odc_dataset1.rdf')
         expected_dict = get_sample_file_as_dict('odc_dataset1.json')
 
-        dcat_dict = xml.DCATDataset(dcat).read_values()
+        dcat_dict = xml_.DCATDataset(dcat).read_values()
 
         # this title has no text in the XML, but is empty string in the JSON - this is ok
         #del expected_dict['distribution'][0]['title']
@@ -45,7 +45,7 @@ class TestXmlToCkan:
         dcat = get_example_file_content('dataset.rdf')
         expected_ckan_dict = get_example_file_as_dict('ckan_dataset.json')
 
-        dcat_dict = xml.DCATDataset(dcat).read_values()
+        dcat_dict = xml_.DCATDataset(dcat).read_values()
         ckan_dict = converters.dcat_to_ckan(dcat_dict)
 
         # the title has no text in the XML, but is empty string in the CKAN dict - this is ok

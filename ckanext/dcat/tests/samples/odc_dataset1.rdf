@@ -9,6 +9,7 @@
     xmlns:j.0="http://publishmydata.com/def/dataset#"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:j.1="http://www.w3.org/ns/dcat#"
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
     xmlns:j.2="http://purl.org/dc/terms/"
     xmlns:j.3="http://rdfs.org/ns/void#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
