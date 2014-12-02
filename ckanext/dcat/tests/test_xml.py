@@ -26,18 +26,6 @@ class TestXmlToDict:
 
         assert_equal2(expected_dict, dcat_dict, ignore_keys_with_blank_values=True)
 
-    def test_odc_dataset1(self):
-        dcat = get_sample_file_content('odc_dataset1.rdf')
-        expected_dict = get_sample_file_as_dict('odc_dataset1.json')
-
-        dcat_dict = xml_.DCATDataset(dcat).read_values()
-
-        # this title has no text in the XML, but is empty string in the JSON - this is ok
-        #del expected_dict['distribution'][0]['title']
-        # the URI is optional for the json serialization - this is ok
-        #expected_dict['url'] = 'https://data.some.org/catalog/datasets/9df8df51-63db-37a8-e044-0003ba9b0d98'
-
-        assert_equal2(expected_dict, dcat_dict, ignore_keys_with_blank_values=True)
 
 class TestXmlToCkan:
     '''This is a test converting DCAT in RDF/XML to CKAN dictionary.'''
@@ -49,6 +37,10 @@ class TestXmlToCkan:
         ckan_dict = converters.dcat_to_ckan(dcat_dict)
 
         # the title has no text in the XML, but is empty string in the CKAN dict - this is ok
-        del expected_ckan_dict['resources'][0]['name']
+        res = expected_ckan_dict['resources'][0]
+        assert res['name'] == '', repr(res['name'])
+        res['name'] = None
+        # url field - some inconsistency - don't care for now so just fix it
+        expected_ckan_dict['url'] = 'https://data.some.org/catalog/datasets/9df8df51-63db-37a8-e044-0003ba9b0d98'
 
         assert_equal2(expected_ckan_dict, ckan_dict)

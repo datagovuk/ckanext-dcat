@@ -378,7 +378,15 @@ _dcat_dataset_elements = [
             'dcat:distribution/dcat:Distribution'
         ],
         multiplicity='*',
-    )
+    ),
+    DCATElement(
+        name='license',
+        search_paths=[
+            'dct:license/text()',
+            'dct:license/@rdf:resource'
+        ],
+        multiplicity='0..1',
+    ),
 
 ]
 

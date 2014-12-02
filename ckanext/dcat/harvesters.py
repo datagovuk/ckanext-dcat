@@ -487,7 +487,10 @@ class DCATJSONHarvester(DCATHarvester):
 
         dcat_dict = json.loads(content)
 
-        package_dict_harvested = converters.dcat_to_ckan(dcat_dict)
+        try:
+            package_dict_harvested = converters.dcat_to_ckan(dcat_dict)
+        except converters.ConvertError, e:
+            raise PackageDictError(str(e))
 
         # convert extras to a dict for the defaults merge
         package_dict_harvested['extras'] = \

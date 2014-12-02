@@ -1,5 +1,5 @@
 {
-  "title": "East Devon Purchase Orders over \u00a3500 ",
+  "title": "East Devon Purchase Orders over £500 ",
   "notes": "All purchase orders over \u00a35000 - excludes those still on paper based system ",
   "license_id": "uk-ogl",
   "extras": [
@@ -13,7 +13,7 @@
     },
     {
       "key": "guid",
-      "value": "EDDCPOOctober2014 "
+      "value": "EDDCPOSeptember2014 "
     },
     {
       "key": "metadata_uri",
@@ -36,8 +36,8 @@
     {
       "description": null,
       "format": null,
-      "name": "Purchase orders over \u00a35000 October 2014 ",
-      "url": "http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersoctober2014.csv "
+      "name": "Purchase orders over \u00a35000 September 2014 ",
+      "url": "http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersseptmeber2014.csv "
     },
     {
       "description": null,

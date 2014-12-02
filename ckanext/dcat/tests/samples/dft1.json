@@ -44,5 +44,5 @@
       "format": "zip"
     }
   ],
-  "language": "en"
+  "language": ["en"]
 }

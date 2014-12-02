@@ -63,9 +63,10 @@ class TestParse:
 
         assert_equal(guid, 'test')
 
+
 class TestSamples:
 
-    def test_eddc1(self):
+    def test_eddc1_dataset1(self):
         catalog_json = get_sample_file_as_dict('eddc1.json')
         expected_ckan_dict = get_sample_file_as_dict('eddc1.ckan.json')
 
@@ -73,8 +74,15 @@ class TestSamples:
         dataset_json = json.loads(dataset_json_str)
         ckan_dict = converters.dcat_to_ckan(dataset_json)
 
-        # dataset.json doesn't store a URI, so ckan_dataset.json will not have one
-        #change_extra_value(expected_ckan_dict, 'metadata_uri', None)
+        assert_equal2(ckan_dict, expected_ckan_dict)
+
+    def test_eddc1_dataset2(self):
+        catalog_json = get_sample_file_as_dict('eddc1.json')
+        expected_ckan_dict = get_sample_file_as_dict('eddc1.d2.ckan.json')
+
+        guid, dataset_json_str = _get_guids_and_datasets(json.dumps(catalog_json))[1]
+        dataset_json = json.loads(dataset_json_str)
+        ckan_dict = converters.dcat_to_ckan(dataset_json)
 
         assert_equal2(ckan_dict, expected_ckan_dict)
 

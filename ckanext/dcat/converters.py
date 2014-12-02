@@ -3,11 +3,17 @@ import logging
 log = logging.getLogger(__name__)
 
 
+class ConvertError(Exception):
+    pass
+
+
 def dcat_to_ckan(dcat_dict):
 
     package_dict = {}
 
     package_dict['title'] = dcat_dict.get('title')
+    if not package_dict['title']:
+        raise ConvertError('Dataset does not have a title')
     package_dict['notes'] = dcat_dict.get('description')
     package_dict['url'] = dcat_dict.get('landingPage') or dcat_dict.get('uri')
 
@@ -83,9 +89,12 @@ def dcat_to_ckan(dcat_dict):
     #    import pdb; pdb.set_trace()
     #    package_dict['state'] = 'deleted'
 
+    language_list = dcat_dict.get('language') or []
+    if not isinstance(language_list, (list, tuple)):
+        raise ConvertError('Language must be a list, not: %s' % type(language_list))
     package_dict['extras'].append({
         'key': 'language',
-        'value': ','.join(dcat_dict.get('language') or [])
+        'value': ','.join(language_list)
     })
 
     package_dict['resources'] = []

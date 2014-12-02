@@ -1,0 +1,78 @@
+{
+  "title": "Live traffic information from the Highways Agency",
+  "notes": "Live traffic information data showing traffic information on the strategic road network in England, maintained by the Highways Agency.",
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": "2012-03-29T19:31"
+    },
+    {
+      "key": "data_modified",
+      "value": "2013-06-12T15:10"
+    },
+    {
+      "key": "guid",
+      "value": null
+    },
+    {
+      "key": "metadata_uri",
+      "value": "http://co-prod2.dh.bytemark.co.uk/dataset/dft-eng-srn-routes-journey-times"
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "Highways Agency"
+    },
+    {
+      "key": "dcat_publisher_email",
+      "value": "test@test.com"
+    },
+    {
+      "key": "language",
+      "value": "en"
+    }
+  ],
+  "resources": [
+    {
+      "description": null,
+      "format": "zip",
+      "name": "Hatris 15 Min Midas 0",
+      "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_0.csv.zip"
+    },
+    {
+      "description": null,
+      "format": "zip",
+      "name": "Hatris 15 Min Midas 1",
+      "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_1.csv.zip"
+    },
+    {
+      "description": null,
+      "format": "zip",
+      "name": "Hatris 15 Min Midas 2",
+      "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_2.csv.zip"
+    },
+    {
+      "description": null,
+      "format": "zip",
+      "name": "Hatris 15 Min Midas 3",
+      "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_3.csv.zip"
+    },
+    {
+      "description": null,
+      "format": "zip",
+      "name": "Hatris 15 Min Midas 4",
+      "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_4.csv.zip"
+    },
+    {
+      "description": null,
+      "format": "zip",
+      "name": "Hatris 15 Min Midas 5",
+      "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_5.csv.zip"
+    }
+  ],
+  "tags": [
+    {
+      "name": "testing"
+    }
+  ],
+  "url": "http://co-prod2.dh.bytemark.co.uk/dataset/dft-eng-srn-routes-journey-times"
+}
