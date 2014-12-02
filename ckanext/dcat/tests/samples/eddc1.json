@@ -1,0 +1,65 @@
+    {
+        "title": "East Devon transparency Datasets ",
+        "description": "Datasets published as part of the transparency code ",
+        "issued": "2014-11-21T00:00:00",
+        "modified": "2014-11-21T00:00:00",
+        "language": "en ",
+        "keyword": [
+            "Transparency"
+        ],
+        "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/ ",
+        "homepage": "http:\\\\new.eastdevon.gov.uk\\tranparency ",
+        "dataset": [
+            {
+                "title": "East Devon Purchase Orders over £500 ",
+                "description": "All purchase orders over £5000 - excludes those still on paper based system ",
+                "identifier": "EDDCPOOctober2014 ",
+                "keyword": "Purchase Orders, Over £5000 ",
+                "issued": "2014-11-21T10:00:00",
+                "modified": "2014-11-21T11:00:00",
+                "publisher": "East Devon District Council ",
+                "distribution": [
+                    {
+                        "downloadURL": "http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersoctober2014.csv ",
+                        "issued": "2014-11-21T00:00:00",
+                        "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/ ",
+                        "modified": "2014-11-21T00:00:00",
+                        "title": "Purchase orders over £5000 October 2014 "
+                    },
+                    {
+                        "downloadURL": "http://new.eastdevon.gov.uk/transparency/finance/orders/info.txt ",
+                        "issued": "2014-11-21T00:00:00",
+                        "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/ ",
+                        "modified": "2014-11-21T00:00:00",
+                        "title": "Purchase orders over £5000 September 2014 "
+                    }
+                ]
+            },
+            {
+                "Title": "East Devon Purchase Orders over £500 ",
+                "description": "All purchase orders over £5000 - excludes those still on paper based system ",
+                "identifier": "EDDCPOSeptember2014 ",
+                "keyword": "Purchase Orders, Over £5000 ",
+                "issued": "2014-11-21T10:00:00",
+                "modified": "2014-11-21T11:00:00",
+                "publisher": "East Devon District Council ",
+                "distribution": [
+                    {
+                        "downloadURL": "http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersseptmeber2014.csv ",
+                        "issued": "2014-11-21T00:00:00",
+                        "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/ ",
+                        "modified": "2014-11-21T00:00:00",
+                        "title": "Purchase orders over £5000 September 2014 "
+                    },
+                    {
+                        "downloadURL": "http://new.eastdevon.gov.uk/transparency/finance/orders/info.txt ",
+                        "issued": "2014-11-21T00:00:00",
+                        "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/ ",
+                        "modified": "2014-11-21T00:00:00",
+                        "title": "Purchase orders over £5000 September 2014 "
+                    }
+                ]
+            }
+        ]
+    }
+

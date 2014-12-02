@@ -1,0 +1,131 @@
+{
+  "title": "East Devon Purchase Orders over \u00a3500 ",
+  "notes": "All purchase orders over \u00a35000 - excludes those still on paper based system ",
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": "2014-11-21T10:00:00"
+    },
+    {
+      "key": "data_modified",
+      "value": "2014-11-21T11:00:00"
+    },
+    {
+      "key": "guid",
+      "value": "EDDCPOOctober2014 "
+    },
+    {
+      "key": "metadata_uri",
+      "value": null
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "East Devon District Council "
+    },
+    {
+      "key": "language",
+      "value": ""
+    }
+  ],
+  "resources": [
+    {
+      "description": null,
+      "format": null,
+      "name": "Purchase orders over \u00a35000 October 2014 ",
+      "url": "http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersoctober2014.csv "
+    },
+    {
+      "description": null,
+      "format": null,
+      "name": "Purchase orders over \u00a35000 September 2014 ",
+      "url": "http://new.eastdevon.gov.uk/transparency/finance/orders/info.txt "
+    }
+  ],
+  "tags": [
+    {
+      "name": "P"
+    },
+    {
+      "name": "u"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": "c"
+    },
+    {
+      "name": "h"
+    },
+    {
+      "name": "a"
+    },
+    {
+      "name": "s"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": " "
+    },
+    {
+      "name": "O"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": "d"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": "s"
+    },
+    {
+      "name": ","
+    },
+    {
+      "name": " "
+    },
+    {
+      "name": "O"
+    },
+    {
+      "name": "v"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": " "
+    },
+    {
+      "name": "\u00a3"
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": " "
+    }
+  ],
+  "url": null
+}

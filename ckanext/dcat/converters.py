@@ -200,8 +200,8 @@ def find_license_by_uri(license_uri):
     for license in model.Package.get_license_register().values():
         if license.url == license_uri:
             return license.id
-    # special cases
-    if license_uri == 'http://www.nationalarchives.gov.uk/doc/open-government-licence/':
+    # special cases - OGL has several versions that all map to uk-ogl
+    if license_uri.startswith('http://www.nationalarchives.gov.uk/doc/open-government-licence/'):
         return 'uk-ogl'
 
 def find_license_by_title(license_title):

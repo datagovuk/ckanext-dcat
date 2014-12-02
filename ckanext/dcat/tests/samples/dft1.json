@@ -1,0 +1,48 @@
+{
+  "title": "Live traffic information from the Highways Agency",
+  "description": "Live traffic information data showing traffic information on the strategic road network in England, maintained by the Highways Agency.",
+  "uri": "http://co-prod2.dh.bytemark.co.uk/dataset/dft-eng-srn-routes-journey-times",
+  "license": "No license provided",
+  "keyword": [
+    "testing"
+  ],
+  "issued": "2012-03-29T19:31",
+  "modified": "2013-06-12T15:10",
+  "publisher": {
+    "name": "Highways Agency",
+    "mbox": "test@test.com"
+  },
+  "distribution": [
+    {
+      "downloadURL": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_0.csv.zip",
+      "title": "Hatris 15 Min Midas 0",
+      "format": "zip"
+    },
+    {
+      "downloadURL": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_1.csv.zip",
+      "title": "Hatris 15 Min Midas 1",
+      "format": "zip"
+    },
+    {
+      "downloadURL": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_2.csv.zip",
+      "title": "Hatris 15 Min Midas 2",
+      "format": "zip"
+    },
+    {
+      "downloadURL": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_3.csv.zip",
+      "title": "Hatris 15 Min Midas 3",
+      "format": "zip"
+    },
+    {
+      "downloadURL": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_4.csv.zip",
+      "title": "Hatris 15 Min Midas 4",
+      "format": "zip"
+    },
+    {
+      "downloadURL": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_5.csv.zip",
+      "title": "Hatris 15 Min Midas 5",
+      "format": "zip"
+    }
+  ],
+  "language": "en"
+}

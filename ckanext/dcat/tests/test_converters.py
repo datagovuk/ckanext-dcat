@@ -1,6 +1,9 @@
 from ckanext.dcat import converters
 from ckanext.dcat.tests import (poor_mans_dict_diff, get_example_file_as_dict,
-                                change_extra_value)
+                                get_sample_file_as_dict,
+                                get_sample_file_content,
+                                change_extra_value,
+                               )
 
 
 class TestConverters(object):
@@ -48,3 +51,5 @@ class TestConverters(object):
 
         assert dcat_dict == new_dcat_dict, poor_mans_dict_diff(
             dcat_dict, new_dcat_dict)
+
+

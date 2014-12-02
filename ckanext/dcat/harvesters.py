@@ -408,8 +408,6 @@ class DCATXMLHarvester(DCATHarvester):
 
         return package_dict, dcat_dict
 
-
-
 class DCATJSONHarvester(DCATHarvester):
 
     # Monkey patch in the base import_stage
@@ -422,7 +420,8 @@ class DCATJSONHarvester(DCATHarvester):
             'description': 'data.json (UK-variant) - simple JSON serialization of DCAT dataset'
         }
 
-    def _get_guids_and_datasets(self, content):
+    @classmethod
+    def _get_guids_and_datasets(cls, content):
 
         try:
             doc = json.loads(content)
@@ -432,27 +431,42 @@ class DCATJSONHarvester(DCATHarvester):
         if isinstance(doc, list):
             # Assume a list of datasets
             datasets = doc
+            if datasets:
+                if not isinstance(datasets[0], dict):
+                    raise ParseError('Could not recognize JSON structure. With a JSON array "[ ... ]" at the top level, each item should be a dataset object. Did not find an object "{ ... }"')
+                if 'publisher' not in datasets[0]:
+                    raise ParseError('Could not recognize JSON structure. With a JSON array "[ ... ]" at the top level, each item should be a dataset object. The first item appeared not to be a dataset because it did not have the "publisher" key.')
         elif isinstance(doc, dict):
             if 'dataset' in doc:
-                datasets = doc.get['dataset']
-            elif 'title' in doc:
+                # It is a Catalog
+                datasets = doc['dataset']
+            elif 'publisher' in doc:
+                # It is a single dataset
                 datasets = [doc]
             else:
-                raise ValueError('Wrong JSON object')
+                raise ParseError('Could not recognize JSON structure. With a JSON object "{ ... }" at the top level, it should be a catalogue object containing an array of datasets, but the "dataset" key was not found.')
         else:
-            raise ValueError('Wrong JSON object')
+            raise ParseError('Could not recognize JSON structure as either a catalogue or an array of datasets.')
 
-        for dataset in datasets:
+        guid_and_dataset_json_str = []
+        for i, dataset in enumerate(datasets):
 
+            if not isinstance(dataset, dict):
+                raise ParseError('Expected dataset JSON object, but got "%r" '
+                                 '(dataset list %s of %s)' %
+                                 (dataset, i, len(datasets)))
             as_string = json.dumps(dataset)
 
             # Get identifier
             guid = dataset.get('identifier')
             if not guid:
-                # This is bad, any ideas welcomed
-                guid = sha1(as_string).hexdigest()
+                raise ParseError('No identifier found for dataset "%s" '
+                                 '(%s of %s)' %
+                                 (dataset.get('title'), i, len(datasets)))
 
-            yield guid, as_string
+            guid_and_dataset_json_str.append((guid, as_string))
+            # don't yield it because a generator cannot raise exceptions (parse errors)
+        return guid_and_dataset_json_str
 
     # DCATHarvester version
     def _get_package_dict(self, harvest_object):
@@ -529,6 +543,15 @@ class DCATJSONHarvester(DCATHarvester):
 
         return package_dict
 
+    def get_dataset_validator(self):
+        # potential JSON validator
+        # You can do: validator.iter_errors(instance)
+        from jsonschema import Draft4Validator, FormatChecker
+        schema_path = os.path.join(os.path.dirname(__file__), 'schema', 'dataset.json')
+
+        with open(schema_path, 'r') as file:
+            schema = json.loads(file.read())
+        return Draft4Validator(schema, format_checker=FormatChecker())
 
 class DCATRDFHarvester(DCATHarvester):
 
