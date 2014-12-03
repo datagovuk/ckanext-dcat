@@ -260,6 +260,8 @@ class DCATHarvester(HarvesterBase):
             obj = HarvestObject(guid=guid, job=harvest_job,
                                 package_id=guid_to_package_id[guid],
                                 extras=[HarvestObjectExtra(key='status', value='delete')])
+            model.Session.flush()  # give the obj an ID
+            log.debug('To delete GUID="%s" id=%r', guid, obj.id)
             ids.append(obj.id)
             model.Session.query(HarvestObject).\
                   filter_by(guid=guid).\
