@@ -440,6 +440,8 @@ class DCATJSONHarvester(DCATHarvester):
             if 'dataset' in doc:
                 # It is a Catalog
                 datasets = doc['dataset']
+                if not isinstance(datasets, list):
+                    raise ParseError('Could not recognize JSON structure. With a Catalogue at the top level, the "dataset" key should contain a JSON array of datasets \'[ { ... }, { ... }, ... ]\', but did not find a JSON array: \'%s\'' % json.dumps(datasets))
             elif 'publisher' in doc:
                 # It is a single dataset
                 datasets = [doc]
@@ -452,12 +454,15 @@ class DCATJSONHarvester(DCATHarvester):
         for i, dataset in enumerate(datasets):
 
             if not isinstance(dataset, dict):
-                raise ParseError('Expected dataset JSON object, but got "%r" '
+                raise ParseError('Expected dataset JSON object, but got \'%s\' '
                                  '(dataset list %s of %s)' %
-                                 (dataset, i, len(datasets)))
+                                 (json.dumps(dataset), i, len(datasets)))
             as_string = json.dumps(dataset)
 
             # Get identifier
+            if not dataset.get('title'):
+                raise ParseError('No title found for dataset %s of %s' %
+                                 (i, len(datasets)))
             guid = dataset.get('identifier')
             if not guid:
                 raise ParseError('No identifier found for dataset "%s" '
