@@ -1,0 +1,49 @@
+{  
+   "title":"East Devon transparency Datasets",
+   "description":"Datasets published as part of the transparency code",
+   "issued":"Nov 21 2014 12:00AM",
+   "homepage":"http:\\\\new.eastdevon.gov.uk\\tranparency",
+   "modified":"2014-11-21T00:00:00",
+   "language":"en",
+   "license":"http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/",
+   "dataset":{  
+      "issued":"2014-11-21T10:00:00",
+      "title":"East Devon Purchase Orders over £500",
+      "modified":"2014-11-21T11:00:00",
+      "description":"All purchase orders over 5000 - excludes those still on paper based system",
+      "identifier":"EDDCPOOctober2014",
+      "publisher":"East Devon District Council",
+      "distribution":[{  
+         "issued":"2014-11-21T00:00:00",
+         "modified":"2014-11-21T00:00:00",
+         "title":"Purchase orders over 5000 October 2014                                                              ",
+         "downloadURL":"http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersoctober2014.csv"
+      },
+      {  
+         "issued":"2014-11-21T00:00:00",
+         "modified":"2014-11-21T00:00:00",
+         "title":"Purchase orders over 5000 September 2014                                                            ",
+         "downloadURL":"http://new.eastdevon.gov.uk/transparency/finance/orders/info.txt "
+      }]
+   },
+   "dataset":[{  
+      "issued":"2014-11-21T10:00:00",
+      "title":"East Devon Purchase Orders over £500",
+      "modified":"2014-11-21T11:00:00",
+      "description":"All purchase orders over 5000 - excludes those still on paper based system",
+      "identifier":"EDDCPOSeptember2014",
+      "publisher":"East Devon District Council",
+      "distribution":[{  
+         "issued":"2014-11-21T00:00:00",
+         "modified":"2014-11-21T00:00:00",
+         "title":"Purchase orders over 5000 September 2014                                                            ",
+         "downloadURL":"http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersseptmeber2014.csv"
+      },
+      {  
+         "issued":"2014-11-21T00:00:00",
+         "modified":"2014-11-21T00:00:00",
+         "title":"Purchase orders over 5000 September 2014                                                            ",
+         "downloadURL":"http://new.eastdevon.gov.uk/transparency/finance/orders/info.txt "
+      }]
+   }]
+}

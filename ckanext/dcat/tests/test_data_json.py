@@ -100,7 +100,7 @@ class TestSamples:
 
     def test_eddc2(self):
         catalog_json = get_sample_file_as_dict('eddc2.json')
-        expected_ckan_dict = get_sample_file_as_dict('eddc1.ckan.json')
+        expected_ckan_dict = get_sample_file_as_dict('eddc2.ckan.json')
 
         guid, dataset_json_str = _get_guids_and_datasets(json.dumps(catalog_json))[0]
         dataset_json = json.loads(dataset_json_str)

@@ -1,0 +1,46 @@
+{
+  "title": "East Devon Purchase Orders over \u00a3500",
+  "notes": "All purchase orders over 5000 - excludes those still on paper based system",
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": "2014-11-21T10:00:00"
+    },
+    {
+      "key": "data_modified",
+      "value": "2014-11-21T11:00:00"
+    },
+    {
+      "key": "guid",
+      "value": "EDDCPOSeptember2014"
+    },
+    {
+      "key": "metadata_uri",
+      "value": null
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "East Devon District Council"
+    },
+    {
+      "key": "language",
+      "value": ""
+    }
+  ],
+  "resources": [
+    {
+      "description": null,
+      "format": null,
+      "name": "Purchase orders over 5000 September 2014                                                            ",
+      "url": "http://new.eastdevon.gov.uk/transparency/finance/orders/eastdevonpurchaseordersseptmeber2014.csv"
+    },
+    {
+      "description": null,
+      "format": null,
+      "name": "Purchase orders over 5000 September 2014                                                            ",
+      "url": "http://new.eastdevon.gov.uk/transparency/finance/orders/info.txt "
+    }
+  ],
+  "tags": [],
+  "url": null
+}

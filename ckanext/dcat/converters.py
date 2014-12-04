@@ -1,10 +1,19 @@
 import logging
+from ckan.lib import helpers as h
 
 log = logging.getLogger(__name__)
 
 
 class ConvertError(Exception):
     pass
+
+
+def ckan_format_to_dcat_mimetype(ckan_format):
+    formats = h.resource_formats()
+    format = formats.get(ckan_format.lower())
+    if format:
+        return format[0]
+    return ckan_format
 
 
 def dcat_to_ckan(dcat_dict):
@@ -99,11 +108,13 @@ def dcat_to_ckan(dcat_dict):
 
     package_dict['resources'] = []
     for distribution in (dcat_dict.get('distribution') or []):
+        mimetype = distribution.get('format')
+        format = h.unified_resource_format(mimetype) if mimetype else None
         resource = {
             'name': distribution.get('title'),
             'description': distribution.get('description'),
             'url': distribution.get('downloadURL') or distribution.get('accessURL'),
-            'format': distribution.get('format'),
+            'format': format,
         }
 
         if distribution.get('byteSize'):
@@ -194,7 +205,7 @@ def ckan_to_dcat(package_dict):
         distribution = {
             'title': resource.get('name'),
             'description': resource.get('description'),
-            'format': resource.get('format'),
+            'format': ckan_format_to_dcat_mimetype(resource.get('format')),
             'byteSize': resource.get('size'),
             # TODO: downloadURL or accessURL depending on resource type?
             'accessURL': resource.get('url'),

@@ -1,3 +1,5 @@
+from nose.tools import assert_equal
+
 from ckanext.dcat import converters
 from ckanext.dcat.tests import (poor_mans_dict_diff, get_example_file_as_dict,
                                 get_sample_file_as_dict,
@@ -52,4 +54,8 @@ class TestConverters(object):
         assert dcat_dict == new_dcat_dict, poor_mans_dict_diff(
             dcat_dict, new_dcat_dict)
 
-
+    def test_ckan_format_to_dcat_mimetype(self):
+        assert_equal(converters.ckan_format_to_dcat_mimetype('CSV'),
+                     'text/csv')
+        assert_equal(converters.ckan_format_to_dcat_mimetype('Anything'),
+                     'Anything')

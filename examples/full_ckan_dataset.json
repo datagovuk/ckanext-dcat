@@ -282,7 +282,7 @@
             "cache_last_updated": null,
             "cache_url": null,
             "description": "Resource locator",
-            "format": "text/html",
+            "format": "HTML",
             "hash": "",
             "id": "95b07708-afde-4d24-a35c-1da8ddfd7d42",
             "last_modified": null,

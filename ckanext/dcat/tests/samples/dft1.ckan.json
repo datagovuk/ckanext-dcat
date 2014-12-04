@@ -34,37 +34,37 @@
   "resources": [
     {
       "description": null,
-      "format": "zip",
+      "format": "ZIP",
       "name": "Hatris 15 Min Midas 0",
       "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_0.csv.zip"
     },
     {
       "description": null,
-      "format": "zip",
+      "format": "ZIP",
       "name": "Hatris 15 Min Midas 1",
       "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_1.csv.zip"
     },
     {
       "description": null,
-      "format": "zip",
+      "format": "ZIP",
       "name": "Hatris 15 Min Midas 2",
       "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_2.csv.zip"
     },
     {
       "description": null,
-      "format": "zip",
+      "format": "ZIP",
       "name": "Hatris 15 Min Midas 3",
       "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_3.csv.zip"
     },
     {
       "description": null,
-      "format": "zip",
+      "format": "ZIP",
       "name": "Hatris 15 Min Midas 4",
       "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_4.csv.zip"
     },
     {
       "description": null,
-      "format": "zip",
+      "format": "ZIP",
       "name": "Hatris 15 Min Midas 5",
       "url": "https://s3-eu-west-1.amazonaws.com/lmtesting2810/HATRIS_15MinuteMIDAS_YYYY-MM-DD_5.csv.zip"
     }

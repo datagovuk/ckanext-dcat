@@ -29,25 +29,25 @@
   "resources": [
     {
       "description": null,
-      "format": "application/csv",
+      "format": "CSV",
       "name": null,
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.csv?accessType=DOWNLOAD"
     },
     {
       "description": null,
-      "format": "application/rdf+xml",
+      "format": "RDF",
       "name": null,
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.rdf?accessType=DOWNLOAD"
     },
     {
       "description": null,
-      "format": "application/json",
+      "format": "JSON",
       "name": null,
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.json?accessType=DOWNLOAD"
     },
     {
       "description": null,
-      "format": "application/xml",
+      "format": "XML",
       "name": null,
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.xml?accessType=DOWNLOAD"
     }
