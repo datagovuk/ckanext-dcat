@@ -465,7 +465,7 @@ class DCATJSONHarvester(DCATHarvester):
             if not dataset.get('title'):
                 raise ParseError('No title found for dataset %s of %s' %
                                  (i, len(datasets)))
-            guid = dataset.get('identifier')
+            guid = dataset.get('identifier') or dataset.get('uri')
             if not guid:
                 raise ParseError('No identifier found for dataset "%s" '
                                  '(%s of %s)' %
