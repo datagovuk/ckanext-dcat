@@ -110,7 +110,8 @@ def dcat_to_ckan(dcat_dict):
     package_dict['resources'] = []
     for distribution in (dcat_dict.get('distribution') or []):
         add_title_for_socrata(distribution)
-        mimetype = distribution.get('format')
+        fix_socrata_formats(distribution)
+        mimetype = distribution.get('format') or distribution.get('mediaType')
         format = h.unified_resource_format(mimetype) if mimetype else None
         resource = {
             'name': distribution.get('title'),
@@ -158,6 +159,14 @@ def dcat_to_ckan(dcat_dict):
     #        'format': 'HTML',
     #        'resource_type': 'documentation',
     #    })
+    if dcat_dict.get('landingPage'):
+        package_dict['resources'].append({
+            'name': 'Landing page',
+            'description': None,
+            'url': dcat_dict.get('landingPage'),
+            'format': 'HTML',
+            'resource_type': 'documentation',
+        })
 
     return package_dict
 
@@ -170,11 +179,9 @@ def ckan_to_dcat(package_dict):
     dcat_dict['description'] = package_dict.get('notes')
     dcat_dict['landingPage'] = package_dict.get('url')
 
-
     dcat_dict['keyword'] = []
     for tag in (package_dict.get('tags') or []):
         dcat_dict['keyword'].append(tag['name'])
-
 
     dcat_dict['publisher'] = {}
 
@@ -233,23 +240,51 @@ def find_license_by_title(license_title):
         if license.title.lower() == license_title_lower:
             return license.id
 
-global _socrata_url_regex
+global _socrata_url_regex, _socrata_geo_format_regex
 _socrata_url_regex = None
+_socrata_geo_format_regex = None
+
 
 def add_title_for_socrata(distribution):
     '''
     Socrata doesn't give each resource a name/description, so add it based
     on the url
     e.g. https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.rdf?accessType=DOWNLOAD
+         https://data.bathhacked.org/api/geospatial/tu26-eg7z?method=export&format=KML
     '''
     if distribution.get('description') or distribution.get('title'):
         return
     global _socrata_url_regex
     if not _socrata_url_regex:
         _socrata_url_regex = re.compile('.*/rows\.[^\?]+?accessType=(\w+)')
-    match = _socrata_url_regex.match(distribution.get('url', ''))
+    match = _socrata_url_regex.match(distribution.get('accessURL', ''))
     if not match:
         distribution['title'] = 'Download'
         return
     accessType = match.groups()[0]
     distribution['title'] = accessType.capitalize()
+
+
+def fix_socrata_formats(distribution):
+    '''
+    Socrata has a couple of weird mediaTypes, so fix that
+
+        {"downloadURL": "https://data.bathhacked.org/api/geospatial/t5sn-f4vu?method=export&format=Shapefile",
+        "mediaType": "application/zip"},
+     should be Shapefile (there is no mimetype)
+
+        {"downloadURL": "https://data.bathhacked.org/api/geospatial/t5sn-f4vu?method=export&format=Original",
+        "mediaType": "application/zip"},
+     should be '' - depends on what format it was uploaded
+    '''
+    global _socrata_geo_format_regex
+    if not _socrata_geo_format_regex:
+        _socrata_geo_format_regex = re.compile('.*/api/geospatial/[^\?/]+?.*format=(\w+)')
+    match = _socrata_geo_format_regex.match(distribution.get('downloadURL') or '')
+    if not match:
+        return
+    socrata_format = match.groups()[0]
+    if socrata_format == 'Shapefile':
+        distribution['format'] = 'Shapefile'
+    elif socrata_format == 'Original':
+        distribution['mediaType'] = distribution['format'] = ''

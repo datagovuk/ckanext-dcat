@@ -50,6 +50,13 @@
       "format": "XML",
       "name": "Download",
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.xml?accessType=DOWNLOAD"
+    },
+    {
+      "description": null,
+      "format": "HTML",
+      "name": "Landing page",
+      "resource_type": "documentation",
+      "url": "https://sandbox.demo.socrata.com/d/qcq7-r62w"
     }
   ],
   "tags": [],
