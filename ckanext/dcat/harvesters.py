@@ -55,13 +55,14 @@ class DCATHarvester(HarvesterBase):
                 url = url + '&' if '?' in url else url + '?'
                 url = url + 'page={0}'.format(page)
 
-
             log.debug('Getting file %s', url)
 
             # first we try a HEAD request which may not be supported
             did_get = False
             r = requests.head(url)
-            if r.status_code == 405:
+            if r.status_code in (405, 400):
+                # HEAD request isn't support (405 Not Supported or 400 more
+                # general error e.g. Socrata) so fall back to GET
                 r = requests.get(url, stream=True)
                 did_get = True
             r.raise_for_status()

@@ -30,25 +30,25 @@
     {
       "description": null,
       "format": "CSV",
-      "name": null,
+      "name": "Download",
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.csv?accessType=DOWNLOAD"
     },
     {
       "description": null,
       "format": "RDF",
-      "name": null,
+      "name": "Download",
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.rdf?accessType=DOWNLOAD"
     },
     {
       "description": null,
       "format": "JSON",
-      "name": null,
+      "name": "Download",
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.json?accessType=DOWNLOAD"
     },
     {
       "description": null,
       "format": "XML",
-      "name": null,
+      "name": "Download",
       "url": "https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.xml?accessType=DOWNLOAD"
     }
   ],

@@ -1,3 +1,4 @@
+import re
 import logging
 from ckan.lib import helpers as h
 
@@ -108,6 +109,7 @@ def dcat_to_ckan(dcat_dict):
 
     package_dict['resources'] = []
     for distribution in (dcat_dict.get('distribution') or []):
+        add_title_for_socrata(distribution)
         mimetype = distribution.get('format')
         format = h.unified_resource_format(mimetype) if mimetype else None
         resource = {
@@ -230,3 +232,24 @@ def find_license_by_title(license_title):
     for license in model.Package.get_license_register().values():
         if license.title.lower() == license_title_lower:
             return license.id
+
+global _socrata_url_regex
+_socrata_url_regex = None
+
+def add_title_for_socrata(distribution):
+    '''
+    Socrata doesn't give each resource a name/description, so add it based
+    on the url
+    e.g. https://sandbox.demo.socrata.com/api/views/qcq7-r62w/rows.rdf?accessType=DOWNLOAD
+    '''
+    if distribution.get('description') or distribution.get('title'):
+        return
+    global _socrata_url_regex
+    if not _socrata_url_regex:
+        _socrata_url_regex = re.compile('.*/rows\.[^\?]+?accessType=(\w+)')
+    match = _socrata_url_regex.match(distribution.get('url', ''))
+    if not match:
+        distribution['title'] = 'Download'
+        return
+    accessType = match.groups()[0]
+    distribution['title'] = accessType.capitalize()
