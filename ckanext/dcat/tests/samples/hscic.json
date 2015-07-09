@@ -23,7 +23,11 @@
             }
         ],
         "references": [
-            "https://indicators.ic.nhs.uk/download/Outcomes Framework/Specification/NHSOF_Domain_1_S.pdf",
+            {
+                "url": "https://indicators.ic.nhs.uk/download/Outcomes Framework/Specification/NHSOF_Domain_1_S",
+                "title": "Framework specification",
+                "format": "application/pdf"
+            },
             "https://www.gov.uk/government/publications/nhs-outcomes-framework-2015-to-2016",
             "https://indicators.ic.nhs.uk/download/Outcomes Framework/Specification/NHSOF_1a.i_I01954_Q.pdf"
         ]

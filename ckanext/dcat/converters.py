@@ -152,11 +152,24 @@ def dcat_to_ckan(dcat_dict):
         })
     # ODC did't want this, but seems the best way to add docs.
     for reference in (dcat_dict.get('references') or []):
-        format_ = guess_format_from_url(reference, default='HTML')
+        if isinstance(reference, dict):
+            # A dict is outside of POD and have not thought about RDF equivalent
+            title = reference.get('title') or 'Reference'
+            url = reference.get('url')
+            format_ = None
+            mimetype = reference.get('format') or reference.get('mediaType')
+            if mimetype:
+                format_ = h.unified_resource_format(mimetype)
+            if not format_:
+                format_ = guess_format_from_url(url, default='HTML')
+        else:
+            title = 'Reference'
+            url = reference
+            format_ = guess_format_from_url(reference, default='HTML')
         package_dict['resources'].append({
-            'name': 'Reference',
+            'name': title,
             'description': None,
-            'url': reference,
+            'url': url,
             'format': format_,
             'resource_type': 'documentation',
         })
