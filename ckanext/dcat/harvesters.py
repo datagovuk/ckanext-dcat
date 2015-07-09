@@ -88,6 +88,18 @@ class DCATHarvester(HarvesterBase):
                     self._save_gather_error('Remote file is too big.', harvest_job)
                     return None
 
+            try:
+                import chardet
+                encoding_dict = chardet.detect(content)
+                log.debug('Encoding detected: %r', encoding_dict)
+                allowed_encodings = set(('ascii', 'utf-8'))
+                if encoding_dict['confidence'] > 0.8 and \
+                        encoding_dict['encoding'].lower() not in allowed_encodings:
+                    self._save_gather_error('File encoding is detected as "%s" when it should be one of: "%s"' % encoding_dict['encoding'], '" "'.join(allowed_encodings), harvest_job)
+                    return None
+            except ImportError:
+                log.debug('Skipping encoding check as chardet is not installed')
+
             return content
 
         except requests.exceptions.HTTPError, error:
