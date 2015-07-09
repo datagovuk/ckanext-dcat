@@ -536,17 +536,11 @@ class DCATJSONHarvester(DCATHarvester):
         # DGU Theme
         try:
             from ckanext.dgu.lib.theme import categorize_package, PRIMARY_THEME, SECONDARY_THEMES
-            if existing_dataset:
-                # Bring forward extras which may be manually edited
-                for extra_key in (PRIMARY_THEME, SECONDARY_THEMES):
-                    package_dict['extras'][extra_key] = \
-                        existing_dataset.extras.get(extra_key)
-            if not package_dict['extras'].get(PRIMARY_THEME):
-                # Guess theme from other metadata
-                themes = categorize_package(package_dict)
-                if themes:
-                    package_dict['extras'][PRIMARY_THEME] = themes[0]
-                    package_dict['extras'][SECONDARY_THEMES] = json.dumps(themes[1:])
+            # Guess theme from other metadata
+            themes = categorize_package(package_dict)
+            if themes:
+                package_dict['extras'][PRIMARY_THEME] = themes[0]
+                package_dict['extras'][SECONDARY_THEMES] = json.dumps(themes[1:])
         except ImportError:
             pass
         log.debug('Theme: %s', package_dict['extras'].get('theme-primary'))
