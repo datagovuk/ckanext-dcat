@@ -1,0 +1,87 @@
+{
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": "2014-06-28"
+    },
+    {
+      "key": "data_modified",
+      "value": "2014-09-25"
+    },
+    {
+      "key": "guid",
+      "value": "https://data.bathhacked.org/api/views/t5sn-f4vu"
+    },
+    {
+      "key": "metadata_uri",
+      "value": null
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "data.bathhacked.org"
+    },
+    {"key": "license_url",
+     "value": "http://creativecommons.org/licenses/by-nc/3.0/legalcode"
+    },
+    {
+      "key": "language",
+      "value": ""
+    }
+  ],
+  "notes": "Contains the location of all allotment sites in the BANES area. The Council is responsible for 23 sites in Bath. Outside the city of Bath responsibility for allotments remains with other local bodies, such as Parish Councils. If you live outside the city of Bath, please contact the Parish Council directly. Please be aware that priority is given to people living within the parish or close by.",
+  "resources": [
+    {
+      "description": null,
+      "format": "KML",
+      "name": "Download",
+      "url": "https://data.bathhacked.org/api/geospatial/t5sn-f4vu?method=export&format=KML"
+    },
+    {
+      "description": null,
+      "format": "KMZ",
+      "name": "Download",
+      "url": "https://data.bathhacked.org/api/geospatial/t5sn-f4vu?method=export&format=KMZ"
+    },
+    {
+      "description": null,
+      "format": "SHP",
+      "name": "Download",
+      "url": "https://data.bathhacked.org/api/geospatial/t5sn-f4vu?method=export&format=Shapefile"
+    },
+    {
+      "description": null,
+      "format": null,
+      "name": "Download",
+      "url": "https://data.bathhacked.org/api/geospatial/t5sn-f4vu?method=export&format=Original"
+    },
+    {
+      "description": null,
+      "format": "JSON",
+      "name": "Download",
+      "url": "https://data.bathhacked.org/api/views/t5sn-f4vu/rows.json?accessType=DOWNLOAD"
+    },
+    {
+      "description": null,
+      "format": "CSV",
+      "name": "Download",
+      "url": "https://data.bathhacked.org/api/views/t5sn-f4vu/rows.csv?accessType=DOWNLOAD"
+    },
+    {
+      "description": null,
+      "format": "HTML",
+      "name": "Landing page",
+      "resource_type": "documentation",
+      "url": "https://data.bathhacked.org/d/t5sn-f4vu"
+    }
+  ],
+  "tags": [
+    {
+      "name": "allotments"
+    },
+    {
+      "name": "poi"
+    }
+  ],
+  "title": "Location of Allotments in Bath",
+  "url": "https://data.bathhacked.org/d/t5sn-f4vu"
+}
