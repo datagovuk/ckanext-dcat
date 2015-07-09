@@ -22,8 +22,8 @@ from ckanext.harvest.harvesters.base import HarvesterBase, PackageDictError
 from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
 
-from ckanext.dcat import converters, formats
-from ckanext.dcat.formats import ParseError
+from ckanext.dcat import converters
+from ckanext.dcat.formats import ParseError, rdf, xml_
 
 log = logging.getLogger(__name__)
 
@@ -416,7 +416,7 @@ class DCATXMLHarvester(DCATHarvester):
 
         content = harvest_object.content
 
-        dataset = formats.xml_.DCATDataset(content)
+        dataset = xml_.DCATDataset(content)
         dcat_dict = dataset.read_values()
 
         package_dict = converters.dcat_to_ckan(dcat_dict)
@@ -588,7 +588,7 @@ class DCATRDFHarvester(DCATHarvester):
 
     def _get_guids_and_datasets(self, content):
 
-        rdf_doc = formats.rdf.DCATDatasets(content)
+        rdf_doc = rdf.DCATDatasets(content)
         for uri, dataset_rdf_str in rdf_doc.split_into_datasets():
 
             guid = uri
@@ -602,10 +602,10 @@ class DCATRDFHarvester(DCATHarvester):
 
         content = harvest_object.content
 
-        dataset = formats.rdf.DCATDataset(content)
+        dataset = rdf.DCATDataset(content)
         try:
             dcat_dict = dataset.read_values()
-        except formats.rdf.ReadValueError, e:
+        except rdf.ReadValueError, e:
             raise PackageDictError(str(e))
 
         package_dict = converters.dcat_to_ckan(dcat_dict)
@@ -618,10 +618,10 @@ class DCATRDFHarvester(DCATHarvester):
 
         content = harvest_object.content
 
-        dataset = formats.rdf.DCATDataset(content)
+        dataset = rdf.DCATDataset(content)
         try:
             dcat_dict = dataset.read_values()
-        except formats.rdf.ReadValueError, e:
+        except rdf.ReadValueError, e:
             raise PackageDictError(str(e))
 
         package_dict_harvested = converters.dcat_to_ckan(dcat_dict)
@@ -655,17 +655,11 @@ class DCATRDFHarvester(DCATHarvester):
         # DGU Theme
         try:
             from ckanext.dgu.lib.theme import categorize_package, PRIMARY_THEME, SECONDARY_THEMES
-            if existing_dataset:
-                # Bring forward extras which may be manually edited
-                for extra_key in (PRIMARY_THEME, SECONDARY_THEMES):
-                    package_dict['extras'][extra_key] = \
-                        existing_dataset.extras.get(extra_key)
-            if not package_dict['extras'].get(PRIMARY_THEME):
-                # Guess theme from other metadata
-                themes = categorize_package(package_dict)
-                if themes:
-                    package_dict['extras'][PRIMARY_THEME] = themes[0]
-                    package_dict['extras'][SECONDARY_THEMES] = themes[1:]
+            # Guess theme from other metadata
+            themes = categorize_package(package_dict)
+            if themes:
+                package_dict['extras'][PRIMARY_THEME] = themes[0]
+                package_dict['extras'][SECONDARY_THEMES] = json.dumps(themes[1:])
         except ImportError:
             pass
         log.debug('Theme: %s', package_dict['extras'].get('theme-primary'))
