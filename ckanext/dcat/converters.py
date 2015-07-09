@@ -150,15 +150,16 @@ def dcat_to_ckan(dcat_dict):
             'format': 'SHP',
             'resource_type': 'file',
         })
-    # ODC don't want this. Is there a better way to add docs?
-    #for reference in (dcat_dict.get('references') or []):
-    #    package_dict['resources'].append({
-    #        'name': 'Reference',
-    #        'description': None,
-    #        'url': reference,
-    #        'format': 'HTML',
-    #        'resource_type': 'documentation',
-    #    })
+    # ODC did't want this, but seems the best way to add docs.
+    for reference in (dcat_dict.get('references') or []):
+        format_ = guess_format_from_url(reference, default='HTML')
+        package_dict['resources'].append({
+            'name': 'Reference',
+            'description': None,
+            'url': reference,
+            'format': format_,
+            'resource_type': 'documentation',
+        })
     if dcat_dict.get('landingPage'):
         package_dict['resources'].append({
             'name': 'Landing page',
@@ -288,3 +289,10 @@ def fix_socrata_formats(distribution):
         distribution['format'] = 'Shapefile'
     elif socrata_format == 'Original':
         distribution['mediaType'] = distribution['format'] = ''
+
+def guess_format_from_url(url, default=None):
+    extension = url.split('.')[-1]
+    format_ = h.unified_resource_format(extension)
+    if format_ and format_ != extension:
+        return format_
+    return default

@@ -119,3 +119,12 @@ class TestSamples:
 
         assert_equal2(ckan_dict, expected_ckan_dict)
 
+    def test_hscic(self):
+        catalog_json = get_sample_file_as_dict('hscic.json')
+        expected_ckan_dict = get_sample_file_as_dict('hscic.ckan.json')
+
+        guid, dataset_json_str = _get_guids_and_datasets(json.dumps(catalog_json))[0]
+        dataset_json = json.loads(dataset_json_str)
+        ckan_dict = converters.dcat_to_ckan(dataset_json)
+
+        assert_equal2(ckan_dict, expected_ckan_dict)

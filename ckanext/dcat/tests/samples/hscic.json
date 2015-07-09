@@ -1,0 +1,31 @@
+[   {
+        "title": " Potential years of life lost (PYLL) from causes considered amenable to healthcare - adults (NHSOF 1a.i)",
+        "description": "The number of years of life lost by every 100,000 adults aged 20 and over dying from a condition which is usually treatable, measured in a way which allows for comparisons between populations with different age profiles and over time.",
+        "identifier": "https://indicators.ic.nhs.uk/webview/index.jsp?v=2&submode=ddi&study=http%3A%2F%2Fhg-l-app-472.ic.green.net%3A80%2Fobj%2FfStudy%2FP01726&mode=documentation&top=yes",
+        "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+        "publisher": {"name": "Health and Social Care Information Centre", "mbox": "enquiries@hscic.gov.uk"},
+        "keyword": [
+            "death",
+            "mortality",
+            "amenable",
+            "deaths"
+        ],
+        "distribution": [
+            {
+                "downloadURL": "https://indicators.ic.nhs.uk/download/Outcomes Framework/Data/NHSOF_1a.i_I01954_D.xls",
+                "title": "Indicator data (.xls)",
+                "format": "application/xls"
+            },
+            {
+                "downloadURL": "https://indicators.ic.nhs.uk/download/Outcomes Framework/Data/NHSOF_1a.i_I01954_D.csv",
+                "title": "Indicator data (.csv)",
+                "format": "text/csv"
+            }
+        ],
+        "references": [
+            "https://indicators.ic.nhs.uk/download/Outcomes Framework/Specification/NHSOF_Domain_1_S.pdf",
+            "https://www.gov.uk/government/publications/nhs-outcomes-framework-2015-to-2016",
+            "https://indicators.ic.nhs.uk/download/Outcomes Framework/Specification/NHSOF_1a.i_I01954_Q.pdf"
+        ]
+    }
+]
