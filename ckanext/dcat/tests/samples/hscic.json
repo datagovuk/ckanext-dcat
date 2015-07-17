@@ -10,6 +10,8 @@
             "amenable",
             "deaths"
         ],
+        "issued": "2014-06-20",
+        "modified": "2015-02",
         "distribution": [
             {
                 "downloadURL": "https://indicators.ic.nhs.uk/download/Outcomes Framework/Data/NHSOF_1a.i_I01954_D.xls",
