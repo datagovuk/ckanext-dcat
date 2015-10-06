@@ -18,7 +18,7 @@ from ckan import plugins as p
 from ckan import logic
 from ckan import model
 
-from ckanext.harvest.harvesters.base import HarvesterBase, PackageDictError
+from ckanext.harvest.harvesters.dgu_base import DguHarvesterBase, PackageDictError
 from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
 
@@ -27,7 +27,7 @@ from ckanext.dcat.formats import ParseError, rdf, xml_
 
 log = logging.getLogger(__name__)
 
-class DCATHarvester(HarvesterBase):
+class DCATHarvester(DguHarvesterBase):
 
     p.implements(IHarvester)
 
@@ -144,10 +144,9 @@ class DCATHarvester(HarvesterBase):
     def _get_package_name(self, harvest_object, title):
 
         package = harvest_object.package
-        if package is None or package.title != title:
-            name = self._gen_new_name(title)
-            if not name:
-                raise Exception('Could not generate a unique name from the title or the GUID. Please choose a more unique title.')
+        name = self._gen_new_name(title, package.title if package else None)
+        if not name:
+            raise Exception('Could not generate a unique name from the title or the GUID. Please choose a more unique title.')
         else:
             name = package.name
 
@@ -426,7 +425,7 @@ class DCATXMLHarvester(DCATHarvester):
 class DCATJSONHarvester(DCATHarvester):
 
     # Monkey patch in the base import_stage
-    import_stage = HarvesterBase.import_stage
+    import_stage = DguHarvesterBase.import_stage
 
     def info(self):
         return {
@@ -522,9 +521,9 @@ class DCATJSONHarvester(DCATHarvester):
 
         package_dict = package_dict_defaults.merge(package_dict_harvested)
 
-        if not existing_dataset:
-            package_dict['name'] = self.munge_title_to_name(package_dict['title'])
-            package_dict['name'] = self.check_name(package_dict['name'])
+        package_dict['name'] = self._gen_new_name(
+            package_dict['title'],
+            existing_dataset.name if existing_dataset else None)
 
         # Harvest GUID needs setting manually as DCAT has a clashing 'GUID'
         # extra that comes from the dct:identifier
@@ -573,7 +572,7 @@ class DCATJSONHarvester(DCATHarvester):
 class DCATRDFHarvester(DCATHarvester):
 
     # Monkey patch in the base import_stage
-    import_stage = HarvesterBase.import_stage
+    import_stage = DguHarvesterBase.import_stage
 
     DCAT_NS = 'http://www.w3.org/ns/dcat#'
     DCT_NS = 'http://purl.org/dc/terms/'
@@ -636,9 +635,9 @@ class DCATRDFHarvester(DCATHarvester):
 
         package_dict = package_dict_defaults.merge(package_dict_harvested)
 
-        if not existing_dataset:
-            package_dict['name'] = self.munge_title_to_name(package_dict['title'])
-            package_dict['name'] = self.check_name(package_dict['name'])
+        package_dict['name'] = self._gen_new_name(
+            package_dict['title'],
+            existing_dataset.name if existing_dataset else None)
 
         # ODC specific - discard datasets that are not ready
         if package_dict['extras'].get('dcat_subject') == u'http://opendatacommunities.org/def/concept/themes/developer-corner':
