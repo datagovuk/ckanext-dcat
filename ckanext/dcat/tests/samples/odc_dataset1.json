@@ -1,7 +1,7 @@
 {
   "contactEmail": "ODC@communities.gsi.gov.uk",
   "dataDump": "http://opendatacommunities.org/data/administrative-geography/dump",
-  "description": "Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics\n\nThis is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS \u2019SNAC\u2019 system. ",
+  "description": "Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics\n\nThis is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS 'SNAC' system. ",
   "distribution": [],
   "issued": "2012-03-29T19:31:58+01:00",
   "keyword": ["http://www.nationalarchives.gov.uk/doc/open-government-licence/"],
@@ -11,7 +11,7 @@
   "sparqlEndpoint": "http://opendatacommunities.org/sparql",
   "spatial": "http://statistics.data.gov.uk/id/statistical-geography/E92000001",
   "subject": [
-    "http://opendatacommunities.org/def/concept/themes/geography"
+    "http://opendatacommunities.org/def/concept/themes/homelessness"
   ],
   "title": "Administrative geography",
   "uri": "http://opendatacommunities.org/data/administrative-geography",

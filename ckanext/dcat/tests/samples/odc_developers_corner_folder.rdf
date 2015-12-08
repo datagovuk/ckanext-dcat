@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://opendatacommunities.org/data/ssd-test">
+    <modified xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2015-10-30T10:45:00Z</modified>
+    <rdf:type rdf:resource="http://publishmydata.com/def/dataset#Dataset"/>
+    <rdf:type rdf:resource="http://publishmydata.com/def/dataset#LinkedDataset"/>
+    <title xmlns="http://purl.org/dc/terms/">SSD-M</title>
+    <publisher xmlns="http://purl.org/dc/terms/" rdf:resource="http://reference.data.gov.uk/id/department/dclg"/>
+    <issued xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2015-10-30T10:45:00Z</issued>
+    <label xmlns="http://www.w3.org/2000/01/rdf-schema#">SSD-M</label>
+    <graph xmlns="http://publishmydata.com/def/dataset#" rdf:resource="http://opendatacommunities.org/graph/ssd-test"/>
+    <license xmlns="http://purl.org/dc/terms/" rdf:resource="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"/>
+    <contactEmail xmlns="http://publishmydata.com/def/dataset#" rdf:resource="mailto:ODC@communities.gsi.gov.uk"/>
+    <inFolder xmlns="http://publishmydata.com/def/ontology/folder/" rdf:resource="http://opendatacommunities.org/def/concept/folders/themes/developer-corner"/>
+</rdf:Description>
+
+</rdf:RDF>

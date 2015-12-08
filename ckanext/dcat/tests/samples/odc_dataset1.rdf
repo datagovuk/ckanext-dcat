@@ -16,13 +16,13 @@
     xmlns:j.4="http://publishmydata.com/def/ontology/folder/"
     xmlns:geog="http://opendatacommunities.org/def/ontology/geography/">
   <j.1:Dataset rdf:about="http://opendatacommunities.org/data/administrative-geography">
-    <j.1:theme rdf:resource="http://opendatacommunities.org/def/concept/themes/geography"/>
+    <j.1:theme rdf:resource="http://opendatacommunities.org/def/concept/themes/homelessness"/>
     <j.2:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
     >2012-03-29T19:31:58+01:00</j.2:issued>
     <rdfs:comment>Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics</rdfs:comment>
-    <j.2:subject rdf:resource="http://opendatacommunities.org/def/concept/themes/geography"/>
+    <j.2:subject rdf:resource="http://opendatacommunities.org/def/concept/themes/homelessness"/>
     <j.3:dataDump rdf:resource="http://opendatacommunities.org/data/administrative-geography/dump"/>
-    <j.4:inFolder rdf:resource="http://opendatacommunities.org/def/concept/folders/themes/geography"/>
+    <j.4:inFolder rdf:resource="http://opendatacommunities.org/def/concept/folders/themes/homelessness"/>
     <j.3:triples rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"
     >342730</j.3:triples>
     <rdfs:label>Administrative geography</rdfs:label>
@@ -37,7 +37,7 @@
     <rdf:type rdf:resource="http://rdfs.org/ns/void#Dataset"/>
     <j.2:license rdf:resource="http://www.nationalarchives.gov.uk/doc/open-government-licence/"/>
     <j.0:contactEmail rdf:resource="mailto:ODC@communities.gsi.gov.uk"/>
-    <j.2:description>This is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS ’SNAC’ system. </j.2:description>
+    <j.2:description>This is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS 'SNAC' system. </j.2:description>
     <j.2:spatial rdf:resource="http://statistics.data.gov.uk/id/statistical-geography/E92000001"/>
     <j.1:keyword>http://www.nationalarchives.gov.uk/doc/open-government-licence/</j.1:keyword>
     <geog:zippedShapefile rdf:resource="https://opendatacommunities-geo.s3-eu-west-1.amazonaws.com/45685750-609b-44d2-9878-178808fc0095.zip"/>

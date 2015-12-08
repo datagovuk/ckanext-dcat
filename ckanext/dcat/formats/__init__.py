@@ -12,3 +12,5 @@ class ParseError(Exception):
 class ReadValueError(Exception):
     pass
 
+class IgnoreDataset(Exception):
+    pass

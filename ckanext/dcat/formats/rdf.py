@@ -2,7 +2,9 @@ import rdflib
 from rdflib.namespace import RDF, RDFS
 import xml.sax
 
-from ckanext.dcat.formats import ParseError
+from ckanext.dcat.formats import ParseError, IgnoreDataset
+
+log = __import__('logging').getLogger(__name__)
 
 DCAT = rdflib.Namespace('http://www.w3.org/ns/dcat#')
 REG = rdflib.Namespace('http://purl.org/linked-data/registry#')
@@ -15,6 +17,7 @@ DATASET = rdflib.Namespace('http://publishmydata.com/def/dataset#')
 FOAF = rdflib.Namespace('http://xmlns.com/foaf/0.1/')
 VOID = rdflib.Namespace('http://rdfs.org/ns/void#')
 GEOG = rdflib.Namespace('http://opendatacommunities.org/def/ontology/geography/')
+FOLDER = rdflib.Namespace('http://publishmydata.com/def/ontology/folder/')
 
 
 class RdfDocument(object):
@@ -68,6 +71,25 @@ class DCATDataset(RdfDocument):
     @staticmethod
     def dataset_to_dict(dataset_resource, uri):
         rdf_dataset = add_rdf_resource_operators(dataset_resource)
+
+        # ODC specific - discard datasets that are not ready
+        def ignore_dataset_if(predicate, objects):
+            dataset_objects = set(
+                str(uri_(o)) for o in rdf_dataset.all(predicate))
+            matching_object = dataset_objects & set(objects)
+            if matching_object:
+                log.info('Discarding dataset because of %s=%s : %s',
+                         predicate, matching_object, uri)
+                raise IgnoreDataset()
+        ignore_themes = set((
+            'http://opendatacommunities.org/def/concept/themes/developer-corner',
+            'http://opendatacommunities.org/def/concept/themes/geography'))
+        ignore_folders = set((
+            'http://opendatacommunities.org/def/concept/folders/themes/developer-corner',
+            'http://opendatacommunities.org/def/concept/folders/themes/geography'))
+        ignore_dataset_if(DCAT.theme, ignore_themes)
+        ignore_dataset_if(DCT.subject, ignore_themes)
+        ignore_dataset_if(FOLDER.inFolder, ignore_folders)
 
         d = dcat_dict = {}
         d['title'] = str_(rdf_dataset.first(RDFS.label) or

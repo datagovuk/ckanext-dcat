@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://opendatacommunities.org/data/geography/greenbelt">
+    <modified xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2014-10-17T16:57:42+01:00</modified>
+    <rdf:type rdf:resource="http://publishmydata.com/def/dataset#Dataset"/>
+    <rdf:type rdf:resource="http://opendatacommunities.org/def/ontology/geography/INSPIREdataset"/>
+    <title xmlns="http://purl.org/dc/terms/">Greenbelt</title>
+    <publisher xmlns="http://purl.org/dc/terms/" rdf:resource="http://reference.data.gov.uk/id/department/dclg"/>
+    <comment xmlns="http://www.w3.org/2000/01/rdf-schema#">Polygon dataset showing each English local authority's greenbelt land. </comment>
+    <issued xmlns="http://purl.org/dc/terms/" rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2014-10-09T09:32:09+01:00</issued>
+    <label xmlns="http://www.w3.org/2000/01/rdf-schema#">Greenbelt</label>
+    <graph xmlns="http://publishmydata.com/def/dataset#" rdf:resource="http://opendatacommunities.org/graph/geography/greenbelt"/>
+    <references xmlns="http://purl.org/dc/terms/" rdf:resource="http://docs.publishmydata.com"/>
+    <subject xmlns="http://purl.org/dc/terms/" rdf:resource="http://opendatacommunities.org/def/concept/themes/geography"/>
+    <license xmlns="http://purl.org/dc/terms/" rdf:resource="http://www.ordnancesurvey.co.uk/business-and-government/licensing/using-creating-data-with-os-products/os-opendata.html"/>
+    <sparqlEndpoint xmlns="http://rdfs.org/ns/void#" rdf:resource="http://opendatacommunities.org/sparql"/>
+    <description xmlns="http://purl.org/dc/terms/">Each local authority have digitised these sites in different ways and to different levels of accuracy. DCLG have merged these seperate datasets together. Some obvious overlaps and errors have been removed using ESRI ArcGIS data management toolsbut others may still exist. </description>
+    <contactEmail xmlns="http://publishmydata.com/def/dataset#" rdf:resource="mailto:gis@communities.gsi.gov.uk"/>
+    <keyword xmlns="http://www.w3.org/ns/dcat#">greenbelt</keyword>
+    <spatial xmlns="http://purl.org/dc/terms/" rdf:resource="http://statistics.data.gov.uk/doc/statistical-geography/E92000001"/>
+    <zippedShapefile xmlns="http://opendatacommunities.org/def/ontology/geography/" rdf:resource="https://opendatacommunities-geo.s3-eu-west-1.amazonaws.com/4c8c342f-47f8-48cd-be18-41ec18fa2ea3.zip"/>
+    <GEMINImetadata xmlns="http://opendatacommunities.org/def/ontology/geography/" rdf:resource="http://maps.communities.gov.uk/dclg_inspire_waf/English%20Local%20Authority%20Greenbelt%20boundaries%202012.xml"/>
+</rdf:Description>
+
+</rdf:RDF>

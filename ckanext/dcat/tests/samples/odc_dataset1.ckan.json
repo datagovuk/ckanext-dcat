@@ -18,7 +18,7 @@
     },
     {
       "key": "dcat_subject",
-      "value": "http://opendatacommunities.org/def/concept/themes/geography"
+      "value": "http://opendatacommunities.org/def/concept/themes/homelessness"
     },
     {
       "key": "guid",
@@ -38,7 +38,7 @@
     }
   ],
   "license_id": "uk-ogl",
-  "notes": "Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics\n\nThis is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS \u2019SNAC\u2019 system. ",
+  "notes": "Administrative geography of England, Wales and Scotland, based on data from the Office for National Statistics\n\nThis is a copy of the dataset available at statistics.data.gov.uk, covering the main administrative geographical regions of England, Wales and Scotland - including counties, local authority districts, wards and Westminster constituencies.  Identifiers for the regions are based on the ONS 'SNAC' system. ",
   "resources": [
     {
       "description": null,

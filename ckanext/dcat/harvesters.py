@@ -55,7 +55,7 @@ class DCATHarvester(DguHarvesterBase):
                 url = url + '&' if '?' in url else url + '?'
                 url = url + 'page={0}'.format(page)
 
-            log.debug('Getting file %s', url)
+            log.info('Getting file %s', url)
 
             # first we try a HEAD request which may not be supported
             did_get = False
@@ -95,7 +95,7 @@ class DCATHarvester(DguHarvesterBase):
                 allowed_encodings = set(('ascii', 'utf-8'))
                 if encoding_dict['confidence'] > 0.8 and \
                         encoding_dict['encoding'].lower() not in allowed_encodings:
-                    self._save_gather_error('File encoding is detected as "%s" when it should be one of: "%s"' % encoding_dict['encoding'], '" "'.join(allowed_encodings), harvest_job)
+                    self._save_gather_error('File encoding is detected as "%s" when it should be one of: "%s"' % (encoding_dict['encoding'], '" "'.join(allowed_encodings)), harvest_job)
                     return None
             except ImportError:
                 log.debug('Skipping encoding check as chardet is not installed')
@@ -227,7 +227,7 @@ class DCATHarvester(DguHarvesterBase):
                 batch_guids = []
                 for guid, as_string in self._get_guids_and_datasets(content):
 
-                    log.debug('Got identifier: {0}'.format(guid))
+                    log.debug('Got identifier: {0}...'.format(guid))
                     batch_guids.append(guid)
 
                     if guid in guids_in_db:
@@ -236,11 +236,13 @@ class DCATHarvester(DguHarvesterBase):
                                         package_id=guid_to_package_id[guid],
                                         content=as_string,
                                         extras=[HarvestObjectExtra(key='status', value='changed')])
+                        log.debug('...update guid:{0} harvest_obj:{1}'.format(guid, harvest_job.id))
                     else:
                         # Dataset needs to be created
                         obj = HarvestObject(guid=guid, job=harvest_job,
                                         content=as_string,
                                         extras=[HarvestObjectExtra(key='status', value='new')])
+                        log.debug('...create guid:{0} harvest_obj:{1}'.format(guid, harvest_job.id))
 
                     obj.save()
                     ids.append(obj.id)
@@ -620,6 +622,8 @@ class DCATRDFHarvester(DCATHarvester):
         dataset = rdf.DCATDataset(content)
         try:
             dcat_dict = dataset.read_values()
+        except rdf.IgnoreDataset:
+            return None
         except rdf.ReadValueError, e:
             raise PackageDictError(str(e))
 
@@ -638,11 +642,6 @@ class DCATRDFHarvester(DCATHarvester):
         package_dict['name'] = self._gen_new_name(
             package_dict['title'],
             existing_dataset.name if existing_dataset else None)
-
-        # ODC specific - discard datasets that are not ready
-        if package_dict['extras'].get('dcat_subject') == u'http://opendatacommunities.org/def/concept/themes/developer-corner':
-            log.info('Discarding dataset with theme "developer-corner": %s', harvest_object.guid)
-            return None
 
         # Harvest GUID needs setting manually as DCAT has a clashing 'GUID'
         # extra that comes from the dct:identifier
