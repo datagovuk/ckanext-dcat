@@ -6,11 +6,6 @@ import json
 import logging
 from hashlib import sha1
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-
 from lxml import etree
 import requests
 
@@ -21,6 +16,8 @@ from ckan import model
 from ckanext.harvest.harvesters.dgu_base import DguHarvesterBase, PackageDictError
 from ckanext.harvest.interfaces import IHarvester
 from ckanext.harvest.model import HarvestObject, HarvestObjectExtra
+
+from ckanext.dgu.lib import helpers as dgu_helpers
 
 from ckanext.dcat import converters
 from ckanext.dcat.formats import ParseError, rdf, xml_
@@ -547,9 +544,19 @@ class DCATJSONHarvester(DCATHarvester):
         log.debug('Theme: %s', package_dict['extras'].get('theme-primary'))
 
         # DGU-specific license field
-        if not package_dict.get('license_id') and package_dict['extras'].get('license_url'):
-            # abuses the license_id field, but that's what DGU does
-            package_dict['license_id'] = package_dict['extras']['license_url']
+        license_id = package_dict.get('license_id')
+        licence = package_dict['extras'].get('license_url') or package_dict['extras'].get('license_name')
+        if license_id and licence:
+            # favour license_id
+            licence = None
+        elif licence:
+            license_id, licence = \
+                dgu_helpers.get_licence_fields_from_free_text(licence)
+        package_dict['license_id'] = license_id or ''
+        if licence:
+            package_dict['extras']['licence'] = licence
+        elif 'licence' in package_dict['extras']:
+            del package_dict['extras']['licence']
 
         # DGU contact details
         if package_dict['extras'].get('contact_email'):
@@ -663,9 +670,19 @@ class DCATRDFHarvester(DCATHarvester):
         log.debug('Theme: %s', package_dict['extras'].get('theme-primary'))
 
         # DGU-specific license field
-        if not package_dict.get('license_id') and package_dict['extras'].get('license_url'):
-            # abuses the license_id field, but that's what DGU does
-            package_dict['license_id'] = package_dict['extras']['license_url']
+        license_id = package_dict.get('license_id')
+        licence = package_dict['extras'].get('license_url') or package_dict['extras'].get('license_name')
+        if license_id and licence:
+            # favour license_id
+            licence = None
+        elif licence:
+            license_id, licence = \
+                dgu_helpers.get_licence_fields_from_free_text(licence)
+        package_dict['license_id'] = license_id or ''
+        if licence:
+            package_dict['extras']['licence'] = licence
+        elif 'licence' in package_dict['extras']:
+            del package_dict['extras']['licence']
 
         # DGU contact details
         if package_dict['extras'].get('contact_email'):
