@@ -82,7 +82,6 @@ def dcat_to_ckan(dcat_dict):
         # data.json examples appear to be textual. e.g. "Public Domain":
         # * http://eeoc.gov/data.json (?)
         # * https://nycopendata.socrata.com/data.json (Socrata)
-        print 'LICENSE', repr(dcat_license)
         if dcat_license.startswith('http'):
             package_dict['extras'].append({'key': 'license_url', 'value': dcat_license})
             matched_ckan_license_id = find_license_by_uri(dcat_license)
