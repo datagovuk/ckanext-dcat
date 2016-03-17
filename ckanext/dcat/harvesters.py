@@ -85,17 +85,23 @@ class DCATHarvester(DguHarvesterBase):
                     self._save_gather_error('Remote file is too big.', harvest_job)
                     return None
 
+            # assume it is utf8 and try decoding it as that
             try:
-                import chardet
-                encoding_dict = chardet.detect(content)
-                log.debug('Encoding detected: %r', encoding_dict)
-                allowed_encodings = set(('ascii', 'utf-8'))
-                if encoding_dict['confidence'] > 0.8 and \
-                        encoding_dict['encoding'].lower() not in allowed_encodings:
-                    self._save_gather_error('File encoding is detected as "%s" when it should be one of: "%s"' % (encoding_dict['encoding'], '" "'.join(allowed_encodings)), harvest_job)
+                content.decode('utf8')
+            except UnicodeDecodeError:
+                # fallback use chardet - although it is not as reliable
+                try:
+                    import chardet
+                    encoding_dict = chardet.detect(content)
+                    log.debug('Encoding detected: %r', encoding_dict)
+                    allowed_encodings = set(('ascii', 'utf-8'))
+                    if encoding_dict['confidence'] > 0.8 and \
+                            encoding_dict['encoding'].lower() not in allowed_encodings:
+                        self._save_gather_error('File encoding is detected as "%s" when it should be one of: "%s"' % (encoding_dict['encoding'], '" "'.join(allowed_encodings)), harvest_job)
+                        return None
+                except ImportError:
+                    self._save_gather_error('Character encoding problem - could not interpret content at %s as ASCII or UTF8."' % (url), harvest_job)
                     return None
-            except ImportError:
-                log.debug('Skipping encoding check as chardet is not installed')
 
             return content
 
