@@ -1,0 +1,63 @@
+{
+  "title": "Mortgage and landlord possession statistics, England and Wales",
+  "notes": "The quarterly releases present statistics on possession actions issued in county courts by mortgage lenders and social and private landlords in England and Wales. Note that the figures represent court actions for possession and not actual homes repossessed, as not all possession orders are enforced.",
+  "license_id": "uk-ogl",
+  "url": "https://www.gov.uk/government/collections/mortgage-and-landlord-possession-statistics",
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": "2013-05-09T09:30:39.000+01:00"
+    },
+    {
+      "key": "data_modified",
+      "value": null},
+    {
+      "key": "guid",
+      "value": "https://data.gov.uk/dataset/f1cc1d41-84d2-4268-9e0b-92a2e896c738"
+    },
+    {
+      "key": "metadata_uri",
+      "value": null
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "Ministry of Justice"
+    },
+    {
+      "key": "license_url",
+      "value": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+    },
+    {
+      "key": "language",
+      "value": "en"
+    }
+  ],
+  "resources": [
+    {
+      "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544925/mortgage-and-landlord-possessions-statistics-april-june-2016.pdf",
+      "date": "04/2016",
+      "description": null,
+      "format": "PDF",
+      "name": "Mortgage and landlord possession statistics: April to June 2016 (04/2016-06/2016)"
+    },
+    {
+      "url": "https://www.gov.uk/government/statistics/guide-to-civil-and-administrative-justice-statistics",
+      "description": null,
+      "format": "HTML",
+      "name": "Reference",
+      "resource_type": "documentation"
+    },
+    {
+      "url": "https://www.gov.uk/government/collections/mortgage-and-landlord-possession-statistics",
+      "description": null,
+      "format": "HTML",
+      "name": "Landing page",
+      "resource_type": "documentation"
+    }
+  ],
+  "tags": [
+    {
+      "name": "court"
+    }
+  ]
+}

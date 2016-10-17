@@ -11,8 +11,10 @@ cmd.txt
 # pylons
 data/*
 
+# vim
+*.sw?
+
 # other
 build/*
 tmp/*
 package/DEBIAN/control
-*.swp

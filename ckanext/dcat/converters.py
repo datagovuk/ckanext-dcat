@@ -1,5 +1,6 @@
 import re
 import logging
+
 from ckan.lib import helpers as h
 
 log = logging.getLogger(__name__)
@@ -16,6 +17,12 @@ def ckan_format_to_dcat_mimetype(ckan_format):
         return format[0]
     return ckan_format
 
+def check_value_is_a_list_of_strings(key, value):
+    if not isinstance(value, (list, tuple)):
+        type_ = 'string' if isinstance(value, basestring) else type(value)
+        err = '"%s" value must be an array of strings, not: %s' % \
+            (key, type_)
+        raise ConvertError(err)
 
 def dcat_to_ckan(dcat_dict):
 
@@ -28,7 +35,9 @@ def dcat_to_ckan(dcat_dict):
     package_dict['url'] = dcat_dict.get('landingPage') or dcat_dict.get('uri')
 
     package_dict['tags'] = []
-    for keyword in (dcat_dict.get('keyword') or []):
+    keywords = dcat_dict.get('keyword') or []
+    check_value_is_a_list_of_strings('keywords', keywords)
+    for keyword in keywords:
         package_dict['tags'].append({'name': keyword})
 
     package_dict['extras'] = []
@@ -92,6 +101,8 @@ def dcat_to_ckan(dcat_dict):
             matched_ckan_license_id = find_license_by_title(dcat_license)
             if matched_ckan_license_id:
                 package_dict['license_id'] = matched_ckan_license_id
+    elif 'licence' in dcat_dict:
+        raise ConvertError('Use "license" not "licence"')
 
     #if dcat_dict.get('isReplacedBy'):
     #    # This means the dataset is obsolete and needs deleting in CKAN.
@@ -100,8 +111,7 @@ def dcat_to_ckan(dcat_dict):
     #    package_dict['state'] = 'deleted'
 
     language_list = dcat_dict.get('language') or []
-    if not isinstance(language_list, (list, tuple)):
-        raise ConvertError('Language must be a list, not: %s' % type(language_list))
+    check_value_is_a_list_of_strings('language', language_list)
     package_dict['extras'].append({
         'key': 'language',
         'value': ','.join(language_list)
@@ -119,6 +129,12 @@ def dcat_to_ckan(dcat_dict):
             'url': distribution.get('downloadURL') or distribution.get('accessURL'),
             'format': format,
         }
+        if distribution.get('temporal'):
+            date, additional_name = \
+                distribution_temporal_to_date(distribution['temporal'])
+            resource['date'] = date
+            if additional_name:
+                resource['name'] += ' %s' % additional_name
 
         if distribution.get('byteSize'):
             try:
@@ -151,7 +167,9 @@ def dcat_to_ckan(dcat_dict):
             'resource_type': 'file',
         })
     # ODC did't want this, but seems the best way to add docs.
-    for reference in (dcat_dict.get('references') or []):
+    references = dcat_dict.get('references') or []
+    check_value_is_a_list_of_strings('references', references)
+    for reference in references:
         if isinstance(reference, dict):
             # A dict is outside of POD and have not thought about RDF equivalent
             title = reference.get('title') or 'Reference'
@@ -236,6 +254,47 @@ def ckan_to_dcat(package_dict):
         dcat_dict['distribution'].append(distribution)
 
     return dcat_dict
+
+
+def distribution_temporal_to_date(temporal):
+    bits = temporal.split('/')
+    if len(bits) == 1:
+        raise ConvertError('Distribution "temporal" field must have a "/" in it')
+    elif len(bits) > 2:
+        raise ConvertError('Distribution "temporal" field must only have one "/" in it')
+    bits = [bit.strip() for bit in bits]
+    try:
+        dates = [iso8601_date_to_british(bits[0], can_be_duration=False),
+                 iso8601_date_to_british(bits[1], can_be_duration=True)]
+    except ValueError, e:
+        raise ConvertError(
+            'Distribution "temporal" date didn\'t parse: %s "%s". '
+            'Check it is in ISO8601 format e.g. "YYYY-MM-DD"' % (e, bit))
+    if bits[0] != bits[1]:
+        additional_name = '(%s-%s)' % tuple(dates)
+    else:
+        additional_name = None
+    return dates[0], additional_name
+
+def iso8601_date_to_british(date, can_be_duration=True):
+    '''
+    '2016-01' -> '01/2016'
+    If it is an invalid ISO8601 date, it returns ValueError
+    If it is a duration it returns the same string
+    '''
+    # check it parses (ie not out of range)
+    import dateutil
+    try:
+        dateutil.parser.parse(date)
+    except (ValueError, TypeError), e:
+        if date.startswith('P'):
+            # it is a duration
+            if can_be_duration:
+                return date
+            raise ValueError('Cannot have a duration here: "%s"' % date)
+        raise ValueError(str(e))  # invalid date
+    # reverse direction, strip time, change to slashes
+    return '/'.join(re.split('[^\d]', date)[:3][::-1])
 
 
 def find_license_by_uri(license_uri):

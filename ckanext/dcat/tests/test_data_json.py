@@ -128,3 +128,66 @@ class TestSamples:
         ckan_dict = converters.dcat_to_ckan(dataset_json)
 
         assert_equal2(ckan_dict, expected_ckan_dict)
+
+    def test_moj_mortgage(self):
+        catalog_json = get_sample_file_as_dict('moj_mortgage.json')
+        expected_ckan_dict = get_sample_file_as_dict('moj_mortgage.ckan.json')
+
+        guid, dataset_json_str = _get_guids_and_datasets(json.dumps(catalog_json))[0]
+        dataset_json = json.loads(dataset_json_str)
+        ckan_dict = converters.dcat_to_ckan(dataset_json)
+
+        assert_equal2(ckan_dict, expected_ckan_dict)
+
+
+class TestIsoToBritish(object):
+    def test_year(self):
+        assert_equal(converters.iso8601_date_to_british('1900'), '1900')
+
+    def test_year_month(self):
+        assert_equal(converters.iso8601_date_to_british('1900-01'), '01/1900')
+
+    def test_year_month_day(self):
+        assert_equal(
+            converters.iso8601_date_to_british('1900-01-02'), '02/01/1900')
+
+    def test_year_month_day_time(self):
+        assert_equal(
+            converters.iso8601_date_to_british('1900-01-02T20:56.450686Z'),
+            '02/01/1900')
+
+    def test_duration(self):
+        assert_equal(
+            converters.iso8601_date_to_british('P1M'), 'P1M')
+
+    def test_invalid_string(self):
+        assert_raises(
+            ValueError, converters.iso8601_date_to_british, 'invalid')
+
+    def test_invalid_out_of_range(self):
+        assert_raises(
+            ValueError, converters.iso8601_date_to_british, '2000-13')
+
+
+class TestTemporal(object):
+    def test_different_years(self):
+        assert_equal(converters.distribution_temporal_to_date('2010/2011'),
+                     ('2010', '(2010-2011)'))
+
+    def test_year(self):
+        assert_equal(converters.distribution_temporal_to_date('2010/2010'),
+                     ('2010', None))
+
+    def test_month(self):
+        assert_equal(
+            converters.distribution_temporal_to_date('2010-01/2010-01'),
+            ('01/2010', None))
+
+    def test_duration(self):
+        assert_equal(converters.distribution_temporal_to_date('2010/P1Y'),
+                     ('2010', '(2010-P1Y)'))
+
+    def test_duration_invalid(self):
+        assert_raises(
+            converters.ConvertError,
+            converters.distribution_temporal_to_date, 'P1Y/2010')

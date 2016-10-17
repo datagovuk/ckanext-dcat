@@ -1,0 +1,25 @@
+{
+    "dataset": [
+        {
+            "distribution": [
+                {
+                    "title": "Mortgage and landlord possession statistics: April to June 2016",
+                    "format": "application/pdf",
+                    "temporal": "2016-04/2016-06",
+                    "downloadURL": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/544925/mortgage-and-landlord-possessions-statistics-april-june-2016.pdf"
+                }
+            ],
+            "keyword": ["court"],
+            "landingPage": "https://www.gov.uk/government/collections/mortgage-and-landlord-possession-statistics",
+            "publisher": "Ministry of Justice",
+            "language": ["en"],
+            "frequency": "R/P3M",
+            "issued": "2013-05-09T09:30:39.000+01:00",
+            "references": ["https://www.gov.uk/government/statistics/guide-to-civil-and-administrative-justice-statistics"],
+            "title": "Mortgage and landlord possession statistics, England and Wales",
+            "description": "The quarterly releases present statistics on possession actions issued in county courts by mortgage lenders and social and private landlords in England and Wales. Note that the figures represent court actions for possession and not actual homes repossessed, as not all possession orders are enforced.",
+            "license": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+            "identifier": "https://data.gov.uk/dataset/f1cc1d41-84d2-4268-9e0b-92a2e896c738"
+        }
+    ]
+}
