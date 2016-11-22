@@ -1,0 +1,91 @@
+{
+   "@type":"dcat:Dataset",
+   "identifier":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0",
+   "title":"NHS Postcode Directory (Latest) Centroids",
+   "description":"This file contains the latest release (November 2016) of the centroids of the NHS Postcode Directory for the United Kingdom. <div><br /></div><div>API for CSV - <a href=\"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv\" target=\"_blank\">http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv</a>  (File Size - 776 MB)<br /><div><br /></div><div>REST URL of ArcGIS for INSPIRE View Service - <a href=\"https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireView\" target=\"_blank\">https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireView</a> </div><div><br /></div><div>REST URL of ArcGIS for INSPIRE Feature Download Service – <a href=\"https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireFeatureDownload\" target=\"_blank\">https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireFeatureDownload</a></div></div>",
+   "keyword":[
+      "NHSPD",
+      "Postcodes",
+      "United Kingdom",
+      "WFS",
+      "WMS",
+      "NHS Postcode Directory",
+      "Postcode Products"
+   ],
+   "issued":"2016-10-03T10:05:46.000Z",
+   "modified":"2016-11-22T11:30:41.000Z",
+   "publisher":{
+      "name":"Office for National Statistics"
+   },
+   "contactPoint":{
+      "@type":"vcard:Contact",
+      "fn":"ONS Geography Data",
+      "hasEmail":"mailto:ons.geography@ons.gov.uk"
+   },
+   "accessLevel":"public",
+   "distribution":[
+      {
+         "@type":"dcat:Distribution",
+         "title":"ArcGIS Open Dataset",
+         "format":"Web page",
+         "mediaType":"text/html",
+         "accessURL":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"Esri Rest API",
+         "format":"Esri REST",
+         "mediaType":"application/json",
+         "accessURL":"https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/0"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"GeoJSON",
+         "format":"GeoJSON",
+         "mediaType":"application/vnd.geo+json",
+         "downloadURL":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"CSV",
+         "format":"CSV",
+         "mediaType":"text/csv",
+         "downloadURL":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"KML",
+         "format":"KML",
+         "mediaType":"application/vnd.google-earth.kml+xml",
+         "downloadURL":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.kml"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"Shapefile",
+         "format":"ZIP",
+         "mediaType":"application/zip",
+         "downloadURL":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.zip"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"OGC WMS",
+         "format":"OGC WMS",
+         "mediaType":"application/vnd.ogc.wms_xml",
+         "accessURL":"https://ons-inspire.esriuk.com/arcgis/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+      },
+      {
+         "@type":"dcat:Distribution",
+         "title":"OGC WFS",
+         "format":"OGC WFS",
+         "mediaType":"application/vnd.ogc.wfs_xml",
+         "accessURL":"https://ons-inspire.esriuk.com/arcgis/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/WFSServer?request=GetCapabilities&service=WFS"
+      }
+   ],
+   "landingPage":"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0",
+   "webService":"https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/0",
+   "license":"http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "spatial":"-8.7,48.3,2.2,61.0",
+   "theme":[
+      "geospatial"
+   ]
+}

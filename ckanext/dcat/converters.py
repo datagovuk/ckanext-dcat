@@ -121,6 +121,7 @@ def dcat_to_ckan(dcat_dict):
     for distribution in (dcat_dict.get('distribution') or []):
         add_title_for_socrata(distribution)
         fix_socrata_formats(distribution)
+        fix_esri_formats(distribution)
         mimetype = distribution.get('format') or distribution.get('mediaType')
         format = h.unified_resource_format(mimetype) if mimetype else None
         resource = {
@@ -361,6 +362,18 @@ def fix_socrata_formats(distribution):
         distribution['format'] = 'Shapefile'
     elif socrata_format == 'Original':
         distribution['mediaType'] = distribution['format'] = ''
+
+def fix_esri_formats(distribution):
+    '''
+    ESRI has a couple of oddities in its formats:
+
+         "format":"OGC WMS",
+         "mediaType":"application/vnd.ogc.wms_xml",
+    should be just 'WMS'
+    '''
+    if distribution.get('format', '').startswith('OGC '):
+        distribution['format'] = \
+            distribution['format'].replace('OGC ', '')
 
 def guess_format_from_url(url, default=None):
     extension = url.split('.')[-1]

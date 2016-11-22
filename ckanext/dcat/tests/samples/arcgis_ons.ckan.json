@@ -1,0 +1,116 @@
+{
+  "title": "NHS Postcode Directory (Latest) Centroids",
+  "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0",
+  "notes": "This file contains the latest release (November 2016) of the centroids of the NHS Postcode Directory for the United Kingdom. <div><br /></div><div>API for CSV - <a href=\"http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv\" target=\"_blank\">http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv</a>  (File Size - 776 MB)<br /><div><br /></div><div>REST URL of ArcGIS for INSPIRE View Service - <a href=\"https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireView\" target=\"_blank\">https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireView</a> </div><div><br /></div><div>REST URL of ArcGIS for INSPIRE Feature Download Service \u2013 <a href=\"https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireFeatureDownload\" target=\"_blank\">https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/exts/InspireFeatureDownload</a></div></div>",
+  "extras": [
+    {
+      "key": "data_issued",
+      "value": "2016-10-03T10:05:46.000Z"
+    },
+    {
+      "key": "data_modified",
+      "value": "2016-11-22T11:30:41.000Z"
+    },
+    {
+      "key": "guid",
+      "value": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0"
+    },
+    {
+      "key": "metadata_uri",
+      "value": null
+    },
+    {
+      "key": "dcat_publisher_name",
+      "value": "Office for National Statistics"
+    },
+    {
+      "key": "license_url",
+      "value": "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+    },
+    {
+      "key": "language",
+      "value": ""
+    }
+  ],
+  "license_id": "uk-ogl",
+  "resources": [
+    {
+      "description": null,
+      "format": "HTML",
+      "name": "ArcGIS Open Dataset",
+      "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0"
+    },
+    {
+      "description": null,
+      "format": "Esri REST",
+      "name": "Esri Rest API",
+      "url": "https://ons-inspire.esriuk.com/arcgis/rest/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/0"
+    },
+    {
+      "description": null,
+      "format": "GeoJSON",
+      "name": "GeoJSON",
+      "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.geojson"
+    },
+    {
+      "description": null,
+      "format": "CSV",
+      "name": "CSV",
+      "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.csv"
+    },
+    {
+      "description": null,
+      "format": "KML",
+      "name": "KML",
+      "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.kml"
+    },
+    {
+      "description": null,
+      "format": "ZIP",
+      "name": "Shapefile",
+      "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0.zip"
+    },
+    {
+      "description": null,
+      "format": "WMS",
+      "name": "OGC WMS",
+      "url": "https://ons-inspire.esriuk.com/arcgis/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/WMSServer?request=GetCapabilities&service=WMS"
+    },
+    {
+      "description": null,
+      "format": "WFS",
+      "name": "OGC WFS",
+      "url": "https://ons-inspire.esriuk.com/arcgis/services/Postcodes/NHS_Postcode_Directory_Latest_Centroids/MapServer/WFSServer?request=GetCapabilities&service=WFS"
+    },
+    {
+      "description": null,
+      "format": "HTML",
+      "name": "Landing page",
+      "resource_type": "documentation",
+      "url": "http://geoportal.statistics.gov.uk/datasets/675f07b52292428992709d0af98d86d9_0"
+    }
+  ],
+  "tags": [
+    {
+      "name": "NHSPD"
+    },
+    {
+      "name": "Postcodes"
+    },
+    {
+      "name": "United Kingdom"
+    },
+    {
+      "name": "WFS"
+    },
+    {
+      "name": "WMS"
+    },
+    {
+      "name": "NHS Postcode Directory"
+    },
+    {
+      "name": "Postcode Products"
+    }
+  ]
+}
