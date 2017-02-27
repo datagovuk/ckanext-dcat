@@ -37,6 +37,14 @@ class TestRdfToDict:
 
         assert_equal2(expected_dict, dcat_dict, ignore_keys_with_blank_values=True)
 
+    def test_fsa_dataset1(self):
+        dcat = get_sample_file_content('fsa_dataset1.rdf')
+        expected_dict = get_sample_file_as_dict('fsa_dataset1.json')
+
+        dcat_dict = rdf.DCATDataset(dcat, format='xml').read_values()
+
+        assert_equal2(expected_dict, dcat_dict, ignore_keys_with_blank_values=True)
+
 
 def get_extra(ckan_dict, key):
     for extra in ckan_dict['extras']:
@@ -88,6 +96,17 @@ class TestRdfToCkan:
 
         assert_equal2(expected_ckan_dict, ckan_dict, ignore_order=True)
 
+    def test_fsa_dataset1(self):
+        dcat = get_sample_file_content('fsa_dataset1.rdf')
+        expected_ckan_dict = get_sample_file_as_dict('fsa_dataset1.ckan.json')
+
+        dcat_dict = rdf.DCATDataset(dcat, format='xml').read_values()
+        ckan_dict = converters.dcat_to_ckan(dcat_dict)
+
+        # the URI is optional for the json serialization - this is ok
+        #expected_dict['uri'] = 'https://data.some.org/catalog/datasets/9df8df51-63db-37a8-e044-0003ba9b0d98'
+
+        assert_equal2(expected_ckan_dict, ckan_dict, ignore_order=True)
 
 class TestRdfDatasets:
     def test_split(self):

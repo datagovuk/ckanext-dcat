@@ -1,0 +1,14 @@
+{
+  "uri": "http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g/element/c0c6bd20d48c3beb16aec6c9bb2092b7",
+  "identifier": "http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g/element/c0c6bd20d48c3beb16aec6c9bb2092b7",
+  "title": "November 2015 Wisdom Usage Report",
+  "description": "A report showing the percentage of staff (represented as a decimal) using Wisdom in November 2015 against headcount figures.",
+  "temporal": "2015-11-01/2015-11-30",
+  "distribution": [
+    {
+      "identifier": "http://data.food.gov.uk/catalog/data/distribution/f1ad63d1-909e-4d97-a1ba-4f0f6037772b",
+      "downloadURL": "https://fsadata.github.io/wisdom-data-usage/data/november-2015-wisdom-usage-reports.csv",
+      "format": "text/csv"
+    }
+  ]
+}

@@ -60,8 +60,12 @@ class DCATHarvester(DguHarvesterBase):
             if r.status_code in (405, 400):
                 # HEAD request isn't support (405 Not Supported or 400 more
                 # general error e.g. Socrata) so fall back to GET
-                r = requests.get(url, stream=True)
+                r = requests.get(url, stream=True, allow_redirects=False)
                 did_get = True
+            if r.status_code in (301, 302, 303, 307):
+                # redirects - don't allow this, since this common behaviour
+                # for an error when you add ?page=2 e.g. pastebin.com.
+                return None
             r.raise_for_status()
 
             cl = r.headers.get('content-length')
@@ -219,6 +223,10 @@ class DCATHarvester(DguHarvesterBase):
                     raise
 
             if not content:
+                # e.g. a redirect
+                if page > 1:
+                    log.debug('blank after first page, no more pages')
+                    break
                 return None
 
             if previous_content == content:

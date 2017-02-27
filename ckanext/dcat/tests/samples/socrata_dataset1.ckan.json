@@ -19,10 +19,6 @@
     {
       "key": "dcat_publisher_name",
       "value": "sandbox.demo.socrata.com"
-    },
-    {
-      "key": "language",
-      "value": ""
     }
   ],
   "notes": "Datasync Unit Test - Has Location Column Test",

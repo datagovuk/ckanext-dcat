@@ -127,15 +127,24 @@ class DCATDataset(RdfDocument):
         d['keyword'] = [str_(keyword)
                         for keyword in rdf_dataset.all(DCAT.keyword)] or None
         d['identifier'] = rdf_dataset.first(DCT.identifier)
+        d['temporal'] = str_(rdf_dataset.first(DCT.temporal))
         d['spatial'] = str_(uri_(rdf_dataset.first(DCT.spatial)))
         d['distribution'] = []
+        def first(generator):
+            for i in generator:
+                return i
         for rdf_distribution in rdf_dataset[DCAT.distribution]:
             dist = {}
             add_rdf_resource_operators(rdf_distribution)
-            dist['accessURL'] = rdf_distribution.first(DCAT.accessURL)
-            dist['title'] = rdf_distribution.first(DCT.title)
-            dist['description'] = rdf_distribution.first(DCT.description)
-            dist['format'] = rdf_distribution.first(DCAT.mediaType)
+            dist['identifier'] = str_(first(rdf_distribution[DCT.identifier]))
+            dist['accessURL'] = str_(first(rdf_distribution[DCAT.accessURL]))
+            dist['downloadURL'] = str_(first(rdf_distribution[DCAT.downloadURL]))
+            dist['title'] = str_(first(rdf_distribution[DCT.title]))
+            dist['description'] = str_(first(rdf_distribution[DCT.description]))
+            dist['format'] = str_(first(rdf_distribution[DCAT.mediaType]))
+            dist['conformsTo'] = str_(first(rdf_distribution[DCT.conformsTo]))
+            dist['temporal'] = str_(first(rdf_distribution[DCT.temporal]))
+            dist['spatial'] = str_(first(rdf_distribution[DCT.spatial]))
             if dist:
                 d['distribution'].append(dist)
         d['dataDump'] = str_(uri_(rdf_dataset.first(VOID.dataDump)))

@@ -1,0 +1,55 @@
+<rdf:RDF
+    xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+    xmlns:rt="http://environment.data.gov.uk/flood-monitoring/def/core/"
+    xmlns:admingeo="http://data.ordnancesurvey.co.uk/ontology/admingeo/"
+    xmlns:intervals="http://reference.data.gov.uk/def/intervals/"
+    xmlns:dct="http://purl.org/dc/terms/"
+    xmlns:directorates="http://data.food.gov.uk/codes/organisation/directorates/"
+    xmlns:geometry="http://data.ordnancesurvey.co.uk/ontology/geometry/"
+    xmlns:wisdom-areas="http://data.food.gov.uk/codes/organisation/wisdom-areas/"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:fsa-cat="http://data.food.gov.uk/def/catalog/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:org="http://www.w3.org/ns/org#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:def-uklg="http://opendatacommunities.org/def/local-government/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:cat="http://vocab.epimorphics.com/def/catalog/"
+    xmlns:schema-org="http://schema.org/"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:status="http://reference.data.gov.uk/def/status/"
+    xmlns:void="http://rdfs.org/ns/void#"
+    xmlns:time="http://www.w3.org/2006/time#"
+    xmlns:dgu="http://reference.data.gov.uk/def/reference/"
+    xmlns:fsa-org="http://data.food.gov.uk/def/organisation/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:onsadmingeo="http://statistics.data.gov.uk/def/administrative-geography/"
+    xmlns:spatialrelations="http://data.ordnancesurvey.co.uk/ontology/spatialrelations/"
+    xmlns:odrs="http://schema.theodi.org/odrs#"
+    xmlns:postcode="http://data.ordnancesurvey.co.uk/ontology/postcode/"
+    xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+    xmlns:qb="http://purl.org/linked-data/cube#"
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/">
+    <dcat:Dataset rdf:about="http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g/element/c0c6bd20d48c3beb16aec6c9bb2092b7">
+        <cat:dataset rdf:resource="http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g"/>
+        <cat:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >2015-11-01</cat:startDate>
+        <dcat:distribution>
+            <dcat:Distribution rdf:about="http://data.food.gov.uk/catalog/data/distribution/f1ad63d1-909e-4d97-a1ba-4f0f6037772b">
+                <dcat:mediaType>text/csv</dcat:mediaType>
+                <dcat:downloadURL rdf:resource="https://fsadata.github.io/wisdom-data-usage/data/november-2015-wisdom-usage-reports.csv"/>
+                <dct:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+                >http://data.food.gov.uk/catalog/data/distribution/f1ad63d1-909e-4d97-a1ba-4f0f6037772b</dct:identifier>
+            </dcat:Distribution>
+        </dcat:distribution>
+        <dct:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI"
+        >http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g/element/c0c6bd20d48c3beb16aec6c9bb2092b7</dct:identifier>
+        <dct:temporal>2015-11-01/2015-11-30</dct:temporal>
+        <rdf:type rdf:resource="http://vocab.epimorphics.com/def/catalog/Element"/>
+        <dct:title xml:lang="en">November 2015 Wisdom Usage Report</dct:title>
+        <cat:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
+        >2015-11-30</cat:endDate>
+        <dct:description xml:lang="en">A report showing the percentage of staff (represented as a decimal) using Wisdom in November 2015 against headcount figures.</dct:description>
+    </dcat:Dataset>
+</rdf:RDF>

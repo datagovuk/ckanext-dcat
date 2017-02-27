@@ -111,11 +111,25 @@ def dcat_to_ckan(dcat_dict):
     #    package_dict['state'] = 'deleted'
 
     language_list = dcat_dict.get('language') or []
-    check_value_is_a_list_of_strings('language', language_list)
-    package_dict['extras'].append({
-        'key': 'language',
-        'value': ','.join(language_list)
-    })
+    if language_list:
+        check_value_is_a_list_of_strings('language', language_list)
+        package_dict['extras'].append({
+            'key': 'language',
+            'value': ','.join(language_list)
+        })
+
+    if dcat_dict.get('temporal'):
+        dates = \
+            dataset_temporal_to_dates(dcat_dict['temporal'])
+        package_dict['extras'].append({
+            'key': 'temporal_coverage-from',
+            'value': dates[0]
+        })
+        if dates[1]:
+            package_dict['extras'].append({
+                'key': 'temporal_coverage-to',
+                'value': dates[1]
+            })
 
     package_dict['resources'] = []
     for distribution in (dcat_dict.get('distribution') or []):
@@ -277,6 +291,23 @@ def distribution_temporal_to_date(temporal):
         additional_name = None
     return dates[0], additional_name
 
+
+def dataset_temporal_to_dates(temporal):
+    bits = temporal.split('/')
+    if len(bits) == 1:
+        raise ConvertError('Distribution "temporal" field must have a "/" in it')
+    elif len(bits) > 2:
+        raise ConvertError('Distribution "temporal" field must only have one "/" in it')
+    bits = [bit.strip() for bit in bits]
+    try:
+        dates = [iso8601_date_to_british(bits[0], can_be_duration=False),
+                 iso8601_date_to_british(bits[1], can_be_duration=True)]
+    except ValueError, e:
+        raise ConvertError(
+            'Distribution "temporal" date didn\'t parse: %s "%s". '
+            'Check it is in ISO8601 format e.g. "YYYY-MM-DD"' % (e, bit))
+    return dates
+
 def iso8601_date_to_british(date, can_be_duration=True):
     '''
     '2016-01' -> '01/2016'
@@ -331,7 +362,7 @@ def add_title_for_socrata(distribution):
     global _socrata_url_regex
     if not _socrata_url_regex:
         _socrata_url_regex = re.compile('.*/rows\.[^\?]+?accessType=(\w+)')
-    match = _socrata_url_regex.match(distribution.get('accessURL', ''))
+    match = _socrata_url_regex.match(distribution.get('accessURL') or '')
     if not match:
         distribution['title'] = 'Download'
         return
@@ -371,7 +402,7 @@ def fix_esri_formats(distribution):
          "mediaType":"application/vnd.ogc.wms_xml",
     should be just 'WMS'
     '''
-    if distribution.get('format', '').startswith('OGC '):
+    if (distribution.get('format') or '').startswith('OGC '):
         distribution['format'] = \
             distribution['format'].replace('OGC ', '')
 
