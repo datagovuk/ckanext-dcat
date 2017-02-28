@@ -116,14 +116,17 @@ class TestRdfDatasets:
         # datasets can come in any order
         print [str(d)[:50] for d in datasets]
         if 'http://opendatacommunities.org/data/test1' in str(datasets[0])[:50]:
-            uri, triples = datasets[0]
+            uri1, triples1 = datasets[0]
+            triples2 = datasets[1][1]
         elif 'http://opendatacommunities.org/data/test2' in str(datasets[0])[:50]:
-            uri, triples = datasets[1]
+            uri1, triples1 = datasets[1]
+            triples2 = datasets[0][1]
         else:
             assert 0, str(datasets[0])[:50]
-        assert_equal(uri, 'http://opendatacommunities.org/data/test1')
-        print triples
-        assert_equal(triples.strip(), '''@prefix ns1: <http://purl.org/dc/terms/> .
+        assert_equal(uri1, 'http://opendatacommunities.org/data/test1')
+        print triples1
+        assert_equal(triples1.strip(), '''@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix ns1: <http://purl.org/dc/terms/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -131,3 +134,17 @@ class TestRdfDatasets:
 
 <http://opendatacommunities.org/data/test1> a <http://publishmydata.com/def/dataset#Dataset> ;
     ns1:description "Test1" .''')
+        print triples2
+        assert_equal(triples2.strip(), '''@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix ns1: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://opendatacommunities.org/data/test2> a dcat:Dataset ;
+    ns1:description "Test2" ;
+    dcat:distribution <http://data.food.gov.uk/catalog/data/distribution/f1ad63d1-909e-4d97-a1ba-4f0f6037772b> .
+
+<http://data.food.gov.uk/catalog/data/distribution/f1ad63d1-909e-4d97-a1ba-4f0f6037772b> a dcat:Distribution ;
+    dcat:mediaType "text/csv" .''')

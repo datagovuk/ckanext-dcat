@@ -13,6 +13,11 @@
 
   <dcat:Dataset rdf:about="http://opendatacommunities.org/data/test2">
     <dct:description>Test2</dct:description>
+    <dcat:distribution>
+        <dcat:Distribution rdf:about="http://data.food.gov.uk/catalog/data/distribution/f1ad63d1-909e-4d97-a1ba-4f0f6037772b">
+            <dcat:mediaType>text/csv</dcat:mediaType>
+        </dcat:Distribution>
+    </dcat:distribution>
   </dcat:Dataset>
 
 </rdf:RDF>

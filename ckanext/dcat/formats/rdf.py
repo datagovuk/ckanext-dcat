@@ -49,6 +49,16 @@ class DCATDatasets(RdfDocument):
             uri = dataset
             dataset_graph = rdflib.Graph()
             dataset_graph += self.graph.triples((uri, None, None))
+
+            # add distributions that are referenced
+            for dist in self.graph.triples((uri, rdflib.term.URIRef(
+                    u'http://www.w3.org/ns/dcat#distribution'), None)):
+                print dist
+                dist_uri = dist[2]
+                dataset_graph += self.graph.triples((dist_uri, None, None))
+
+            dataset_graph.bind(
+                'dcat', rdflib.term.URIRef('http://www.w3.org/ns/dcat#'))
             triples_str = dataset_graph.serialize(format='turtle')
             yield str_(uri), triples_str
 

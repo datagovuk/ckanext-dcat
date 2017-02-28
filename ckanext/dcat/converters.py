@@ -107,7 +107,6 @@ def dcat_to_ckan(dcat_dict):
     #if dcat_dict.get('isReplacedBy'):
     #    # This means the dataset is obsolete and needs deleting in CKAN.
     #    # This is a suggestion, but not used yet, so is commented out.
-    #    import pdb; pdb.set_trace()
     #    package_dict['state'] = 'deleted'
 
     language_list = dcat_dict.get('language') or []
