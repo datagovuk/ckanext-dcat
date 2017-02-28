@@ -31,6 +31,8 @@
     xmlns:qb="http://purl.org/linked-data/cube#"
     xmlns:dcat="http://www.w3.org/ns/dcat#"
     xmlns:foaf="http://xmlns.com/foaf/0.1/">
+ <rdf:Description rdf:about="http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g">
+  <cat:elements>
     <dcat:Dataset rdf:about="http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g/element/c0c6bd20d48c3beb16aec6c9bb2092b7">
         <cat:dataset rdf:resource="http://data.food.gov.uk/catalog/data/dataset/fsa-12-01g"/>
         <cat:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
@@ -52,4 +54,6 @@
         >2015-11-30</cat:endDate>
         <dct:description xml:lang="en">A report showing the percentage of staff (represented as a decimal) using Wisdom in November 2015 against headcount figures.</dct:description>
     </dcat:Dataset>
+  </cat:elements>
+ </rdf:Description>
 </rdf:RDF>
